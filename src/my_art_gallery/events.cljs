@@ -1,7 +1,7 @@
-(ns my-todo.events
+(ns my-art-gallery.events
   (:require
    [re-frame.core :as re-frame]
-   [my-todo.db :as db]
+   [my-art-gallery.db :as db]
    ))
 
 (re-frame/reg-event-db

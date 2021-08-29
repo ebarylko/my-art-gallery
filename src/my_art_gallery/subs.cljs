@@ -1,4 +1,4 @@
-(ns my-todo.subs
+(ns my-art-gallery.subs
   (:require
    [re-frame.core :as re-frame]))
 

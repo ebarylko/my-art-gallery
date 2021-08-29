@@ -1,4 +1,4 @@
-# my-todo
+# my-art-gallery
 
 A [re-frame](https://github.com/day8/re-frame) application designed to ... well, that part is up to
 you.
@@ -40,9 +40,10 @@ you.
     - Created on build with either the [dev](#running-the-app) or [prod](#production) profile
     - `js/compiled/`: compiled CLJS (`shadow-cljs`)
       - Not tracked in source control; see [`.gitignore`](.gitignore)
-* [`src/my_todo/`](src/my_todo/): SPA source files (ClojureScript,
+* [`src/my_art_gallery/`](src/my_art_gallery/): SPA source files (ClojureScript,
 [re-frame](https://github.com/Day8/re-frame))
-  - [`core.cljs`](src/my_todo/core.cljs): contains the SPA entry point, `init`
+  - [`core.cljs`](src/my_art_gallery/core.cljs): contains the SPA entry point, `init`
+
 
 ### Editor/IDE
 
@@ -54,7 +55,7 @@ Use your preferred editor or IDE that supports Clojure/ClojureScript development
 1. Install [JDK 8 or later](https://openjdk.java.net/install/) (Java Development Kit)
 2. Install [Node.js](https://nodejs.org/) (JavaScript runtime environment) which should include
    [NPM](https://docs.npmjs.com/cli/npm) or if your Node.js installation does not include NPM also install it.
-5. Clone this repo and open a terminal in the `my-todo` project root directory
+5. Clone this repo and open a terminal in the `my-art-gallery` project root directory
 
 ### Browser Setup
 
@@ -162,14 +163,23 @@ npx shadow-cljs <action> app
 ```
 ### Debug Logging
 
+<<<<<<< HEAD
 The `debug?` variable in [`config.cljs`](src/cljs/my_todo/config.cljs) defaults to `true` in
+=======
+The `debug?` variable in [`config.cljs`](src/cljs/my_gallery/config.cljs) defaults to `true` in
+>>>>>>> Renamed to my-art-gallery
 [`dev`](#running-the-app) builds, and `false` in [`prod`](#production) builds.
 
 Use `debug?` for logging or other tasks that should run only on `dev` builds:
 
 ```clj
+<<<<<<< HEAD
 (ns my-todo.example
   (:require [my-todo.config :as config])
+=======
+(ns my-gallery.example
+  (:require [my-gallery.config :as config])
+>>>>>>> Renamed to my-art-gallery
 
 (when config/debug?
   (println "This message will appear in the browser console only on dev builds."))

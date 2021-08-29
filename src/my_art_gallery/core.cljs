@@ -1,10 +1,10 @@
-(ns my-todo.core
+(ns my-art-gallery.core
   (:require
    [reagent.dom :as rdom]
    [re-frame.core :as re-frame]
-   [my-todo.events :as events]
-   [my-todo.views :as views]
-   [my-todo.config :as config]
+   [my-art-gallery.events :as events]
+   [my-art-gallery.views :as views]
+   [my-art-gallery.config :as config]
    ))
 
 

@@ -1,11 +1,12 @@
-(ns my-todo.views
+(ns my-art-gallery.views
   (:require
    [re-frame.core :as re-frame]
-   [my-todo.subs :as subs]))
+   [my-art-gallery.subs :as subs]
+   ))
 
 (defn main-panel []
   (let [name (re-frame/subscribe [::subs/name])]
     [:div
      [:h1
-      "Hello " @name]
+      "Hello from ahoy " @name]
      ]))
