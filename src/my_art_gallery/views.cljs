@@ -6,16 +6,16 @@
 
 (defn main-panel []
   (let [name (re-frame/subscribe [::subs/name])]
-    [:div
-     [:div "Left Column"]
-     [:div "Center"
+    [:div.container
+     [:div.register "Left Column"]
+     [:div.center "Center"
       [:h1
        "Welcome To My Virtual Gallery" @name]
       [:button "Register as an artist" ]
-      [:button "continue as a user"]
-      ]
-
-      
+      [:button "continue as a user"]]
+     [:div.recent-galleries
+      [:div.gallery "Gallery 1"]
+      [:div.gallery "Gallery 2"]]
      ]))
 
 
