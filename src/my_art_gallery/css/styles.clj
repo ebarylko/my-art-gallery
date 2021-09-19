@@ -7,9 +7,8 @@
    {:background-color "white"
     :margin 0}]
   [:html :body :div#app {:height :100%}]
-  [:.container
+  [:.main
    {:background-color :green
-    :width :100%
     :height :100%
     :align-items :stretch
     :display :flex
@@ -18,8 +17,11 @@
     {:background-color :gold
      :width :200px}]
    [:.center
-    {:background-color :brown
-     :flex-grow 4}]
+    {:background-color :white
+     :padding :20px
+     :flex-grow 4}
+    [:.buttons
+     [:button {:margin-right :10px}]]]
    [:.recent-galleries
     {:background-color :yellow
      :width :200px}]
