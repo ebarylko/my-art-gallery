@@ -2,13 +2,17 @@
   (:require [garden.def :refer [defstyles]]
             [garden.color :refer [rgba]]))
 
+
+(defn css-var [v]
+  (format "var(--%s)" (name v)))
+
 (defstyles screen
   [:body
-   {:background-color "white"
+   {:background-color (css-var :link)
     :margin 0}]
   [:html :body :div#app {:height :100%}]
   [:.main
-   {:background-color :green
+   {
     :height :100%
     :align-items :stretch
     :display :flex
@@ -17,7 +21,7 @@
     {:background-color :gold
      :width :200px}]
    [:.center
-    {:background-color :white
+    {
      :padding :20px
      :flex-grow 4}
     [:.buttons

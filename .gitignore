@@ -15,6 +15,7 @@ pom.xml.asc
 /out/
 /resources/public/js/compiled/
 /resources/public/css/screen.css
+/resources/public/css/bulma.css
 /target/
 /*-init.clj
 /*.log
