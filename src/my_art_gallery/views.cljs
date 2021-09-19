@@ -7,8 +7,15 @@
 (defn main-panel []
   (let [name (re-frame/subscribe [::subs/name])]
     [:div
-     [:h1
-      "Welcome To My Virtual Gallery" @name]
+     [:div "Left Column"]
+     [:div "Center"
+      [:h1
+       "Welcome To My Virtual Gallery" @name]
+      [:button "Register as an artist" ]
+      [:button "continue as a user"]
+      ]
+
+      
      ]))
 
 
