@@ -14,6 +14,8 @@ $united-nations-blue: #5995ED;
 $cedar-chest: #D5573B;
 $eton-blue: #94C9A9;
 $charcoal: #264653;
+$honey-yellow: #FFB703;
+$orange: #FB8500;
 
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
@@ -30,6 +32,10 @@ $fullhd-enabled: false;
     --pink: #{$pink};
     --primary: #{$primary};
     --link: #{$link};
+    --honey-yellow: #{$honey-yellow};
+    --orange: #{$orange};
+
+
 }
 
 // Update some of Bulma's component variables

@@ -22,11 +22,11 @@
      [:div.center 
       [:section.hero.is-primary
        [:div.hero-body
-        "Welcome To My Virtual Gallery " @name]]
+        "Welcome To My Gallery " @name]]
 
       [:section.section.buttons
        [:button.button.is-info "Register as an artist" ]
-       [:button.button.is-warning "continue as a user"]]]
+       [:button.button.is-warning "Continue as a user"]]]
 
      [:div.recent-galleries
       [:div.gallery "Gallery 1"]

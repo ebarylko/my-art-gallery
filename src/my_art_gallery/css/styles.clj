@@ -8,7 +8,7 @@
 
 (defstyles screen
   [:body
-   {:background-color (css-var :link)
+   {:background-color (css-var :primary)
     :margin 0}]
   [:html :body :div#app {:height :100%}]
   [:.main
@@ -18,7 +18,7 @@
     :display :flex
     :flex-direction :row}
    [:.register
-    {:background-color :gold
+    {:background-color (css-var :honey-yellow)
      :width :200px}]
    [:.center
     {
@@ -27,6 +27,6 @@
     [:.buttons
      [:button {:margin-right :10px}]]]
    [:.recent-galleries
-    {:background-color :yellow
+    {:background-color (css-var :orange)
      :width :200px}]
    ])
