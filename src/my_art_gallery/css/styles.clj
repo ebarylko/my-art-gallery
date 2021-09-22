@@ -11,9 +11,28 @@
    {:background-color (css-var :primary)
     :margin 0}]
   [:html :body :div#app {:height :100%}]
+  [:.welcome
+   {:height :300px
+    :padding :30px
+    :background (css-var :primary)}
+   [:.welcome-msg
+    {:margin :auto
+     :height :150px}]
+   [:.hero-body
+    {:font-size :2em}]
+   ]
+
+  [:.users-artists
+   {:height :150px
+    :background (css-var :honey-yellow)}]
+
+  [:.gallery
+   {:height :300px
+    :background (css-var :orange)}]
+
+
   [:.main
-   {
-    :height :100%
+   {:height :100%
     :align-items :stretch
     :display :flex
     :flex-direction :row}
