@@ -23,8 +23,11 @@
          :text-align :center}]]
 
   [:.users-artists {:min-height :300px
+                    :display :flex
                     :background (css-var :orange)}
-   [:.band-title {:color :white}]
+   [:.container {:margin :auto}]
+   [:.band-title {:color :white}
+    [:h1 {:padding-top :0px}]]
    [:.user-options {:display :flex
                     :justify-content :space-evenly}
     [:.button {:min-width :200px

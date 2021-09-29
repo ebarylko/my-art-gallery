@@ -85,28 +85,32 @@
        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus diam, consequat gravida libero rhoncus ut. Morbi maximus, leo sit amet vehicula eleifend, nunc dui porta orci, quis semper odio felis ut quam."]
       ]]]]])
 
+(defn users-band []
+  [:section.users-artists
+   [:div.container
+    [:div.band-title
+     [:h1 "Artists and regular users"]]
+    [:div.user-options
+     [:button.button.is-warning "Log in"]
+     [:button.button.is-warning "Register as an artist"]
+     [:button.button.is-warning "Continue as a user"]]]])
+
+(defn recent-galleries-band []
+  [:section.recent-galleries
+   [:div.container
+    [:div.band-title
+     [:h1 "Recent galleries"]]
+    [:div.cards.columns
+     (for [info (repeat 10 artist-info)]
+       [:div.column [gallery-card info]])
+     ]]])
 
 (defn main-panel []
   (let [name (re-frame/subscribe [::subs/name])]
     [:section.all-bands
      [top-menu]
      [welcome-band @name]
-     [:section.users-artists
-      [:div.container
-       [:div.band-title
-        [:h1 "Artists and regular users"]]
-       [:div.user-options
-        [:button.button.is-warning "Log in"]
-        [:button.button.is-warning "Register as an artist"]
-        [:button.button.is-warning "Continue as a user"]]]]
-
-     [:section.recent-galleries
-      [:div.container
-       [:div.band-title
-        [:h1 "Recent galleries"]]
-       [:div.cards.columns
-        (for [info (repeat 10 artist-info)]
-          [:div.column [gallery-card info]])
-        ]]]]))
+     [users-band]
+     [recent-galleries-band]]))
 
 
