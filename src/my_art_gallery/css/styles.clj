@@ -13,7 +13,7 @@
 
   [:.welcome {:min-height :350px
               :padding :30px
-              :background (css-var :primary)}]
+              :background (css-var :light-blue)}]
 
   [:.band-title
    [:h1 {:width :80%

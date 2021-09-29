@@ -16,6 +16,8 @@ $eton-blue: #94C9A9;
 $charcoal: #264653;
 $honey-yellow: #FFB703;
 $orange: #FB8500;
+$orange-peel: #FD9E02;
+$light-conflower-blue: #8ECAE6;
 
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
@@ -27,15 +29,15 @@ $link: $cedar-chest;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 
+
 :root {
     --eton-blue: #{$eton-blue};
     --pink: #{$pink};
     --primary: #{$primary};
     --link: #{$link};
     --honey-yellow: #{$honey-yellow};
-    --orange: #{$orange};
-
-
+    --orange: #{$orange-peel};
+    --light-blue: #{$light-conflower-blue};
 }
 
 // Update some of Bulma's component variables
