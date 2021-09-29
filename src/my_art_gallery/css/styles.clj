@@ -7,45 +7,31 @@
   (format "var(--%s)" (name v)))
 
 (defstyles screen
-  [:body
-   {:background-color (css-var :primary)
-    :margin 0}]
+  [:body {:background-color (css-var :primary)
+          :margin 0}]
   [:html :body :div#app {:height :100%}]
-  [:.welcome
-   {:height :300px
-    :padding :30px
-    :background (css-var :primary)}
-   [:.welcome-msg
-    {:margin :auto
-     :height :150px}]
-   [:.hero-body
-    {:font-size :2em}]
-   ]
 
-  [:.users-artists
-   {:height :150px
-    :background (css-var :honey-yellow)}]
+  [:.welcome {:min-height :350px
+              :padding :30px
+              :background (css-var :primary)}]
 
-  [:.gallery
-   {:height :300px
-    :background (css-var :orange)}]
+  [:.band-title
+   [:h1 {:width :80%
+         :font-size :3em
+         :margin :auto
+         :padding :30px
+         :text-align :center}]]
 
+  [:.users-artists {:min-height :300px
+                    :background (css-var :orange)}
+   [:.band-title {:color :white}]
+   [:.user-options {:display :flex
+                    :justify-content :space-evenly}
+    [:.button {:min-width :200px
+               :font-size :larger}]]]
 
-  [:.main
-   {:height :100%
-    :align-items :stretch
-    :display :flex
-    :flex-direction :row}
-   [:.register
-    {:background-color (css-var :honey-yellow)
-     :width :200px}]
-   [:.center
-    {
-     :padding :20px
-     :flex-grow 4}
-    [:.buttons
-     [:button {:margin-right :10px}]]]
-   [:.recent-galleries
-    {:background-color (css-var :orange)
-     :width :200px}]
-   ])
+  [:.recent-galleries {:height :auto
+                       :background :white}
+   [:.band-title {:color (css-var :orange)}]
+   [:.cards {:flex-wrap :wrap}
+    [:.card {:min-width :200px}]]])
