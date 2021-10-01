@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+
+$purple: #8A4D76;
+$pink: #FA7C91;
+$brown: #757763;
+$beige-light: #D0D1CD;
+$beige-lighter: #EFF0EB;
+
+// palette
+$tuscan-red: #885053;
+$united-nations-blue: #5995ED;
+$cedar-chest: #D5573B;
+$eton-blue: #94C9A9;
+$charcoal: #264653;
+$honey-yellow: #FFB703;
+$orange: #FB8500;
+$orange-peel: #FD9E02;
+$light-conflower-blue: #8ECAE6;
+
+// Update Bulma's global variables
+$family-sans-serif: "Nunito", sans-serif;
+$grey-dark: $tuscan-red;
+$grey-light: $beige-light;
+$primary: $charcoal;
+$info: $united-nations-blue;
+$link: $cedar-chest;
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+
+
+:root {
+    --eton-blue: #{$eton-blue};
+    --pink: #{$pink};
+    --primary: #{$primary};
+    --link: #{$link};
+    --honey-yellow: #{$honey-yellow};
+    --orange: #{$orange-peel};
+    --light-blue: #{$light-conflower-blue};
+}
+
+// Update some of Bulma's component variables
+$body-background-color: $beige-lighter;
+$control-border-width: 2px;
+$input-border-color: transparent;
+$input-shadow: none;
+
+@import "../../../node_modules/bulma/bulma.sass";

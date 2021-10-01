@@ -1,0 +1,4 @@
+[{:source-path "src/my_art_gallery/css"
+  :stylesheet  my-art-gallery.css.styles/screen
+  :compiler    {:output-to     "resources/public/css/screen.css"
+                :pretty-print? true}}]

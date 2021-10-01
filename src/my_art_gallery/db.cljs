@@ -1,4 +1,4 @@
 (ns my-art-gallery.db)
 
 (def default-db
-  {:name "re-frame"})
+  {:name "Eitan's gallery"})
