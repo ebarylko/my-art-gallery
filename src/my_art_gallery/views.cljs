@@ -3,44 +3,6 @@
    [re-frame.core :as re-frame]
    [my-art-gallery.subs :as subs]))
 
-
-(defn side-menu []
-  [:side.menu
-   [:p.menu-label "General"]
-   [:ul.menu-list
-    [:li [:a "What can users do?"]]
-    [:li [:a "What can artists do?"]]]])
-
-(defn top-menu []
-  [:nav {:class "navbar" :role "navigation" :aria-label "main navigation"}
-   [:div {:class "navbar-brand"}
-    [:a {:class "navbar-item" :href "https://bulma.io"}
-     [:img {:src "https://bulma.io/images/bulma-logo.png" :width "112" :height "28"}]]
-
-    [:a {:role "button" :class "navbar-burger" :aria-label "menu"
-         :aria-expanded "false" :data-target "navbarBasicExample"}
-     [:span {:aria-hidden "true"}]
-     [:span {:aria-hidden "true"}]
-     [:span {:aria-hidden "true"}]]]
-
-   [:div#navbarBasicExample.navbar-menu
-    [:div.navbar-start
-     [:a.navbar-item "Home"]
-     [:a.navbar-item "Documentation"]
-     [:div.navbar-item.has-dropdown.is-hoverable
-      [:a.navbar-link "More"]
-      [:div.navbar-dropdown
-       [:a.navbar-item "About"]
-       [:a.navbar-item "Jobs"]
-       [:a.navbar-item "Contact"]
-       [:hr.navbar-divider]
-       [:a.navbar-item "Report an issue"]]]]
-    [:div.navbar-end
-     [:div.navbar-item
-      [:div.buttons
-       [:a.button.is-primary [:strong "Sign up"]]
-       [:a.button.is-light "Log in"]]]]]])
-
 (defn gallery-card
   [{:keys [artist painting-url instagram avatar-url description]}]
   [:div.card
@@ -101,16 +63,26 @@
     [:div.band-title
      [:h1 "Recent galleries"]]
     [:div.cards.columns
-     (for [info (repeat 10 artist-info)]
-       [:div.column [gallery-card info]])
-     ]]])
+     (for [[idx info] (map-indexed vector (repeat 10 artist-info))]
+       ^{:key idx}
+       [:div.column [gallery-card info]])]]])
 
-(defn main-panel []
+(defn home-page []
   (let [name (re-frame/subscribe [::subs/name])]
     [:section.all-bands
-     [top-menu]
      [welcome-band @name]
      [users-band]
      [recent-galleries-band]]))
 
 
+(defn galleries-page []
+  [:section.galleries
+   [:h1 "Galleries"]])
+
+(defn login-page []
+  [:section.login
+   [:h1 "Log In"]])
+
+(defn registration-page []
+  [:section.registration
+   [:h1 "Registration"]])

@@ -1,7 +1,6 @@
 # my-art-gallery
 
-A [re-frame](https://github.com/day8/re-frame) application designed to ... well, that part is up to
-you.
+A [re-frame](https://github.com/day8/re-frame) application designed to provide artists a free option to show their paintings, sculptures etc in a virtual gallery.
 
 ## Getting Started
 
@@ -91,6 +90,18 @@ the enhancement request in their bug tracker:
 ## Development
 
 ### Running the App
+
+Run `garden-gnome` to watch and generate styles on changes:
+
+```sh
+lein run -m garden-gnome.watch
+```
+
+Build (or watch) for sass to generate styles including Bulma's sass and variables:
+
+```sh
+npm run build-css
+```
 
 Start a temporary local web server, build the app with the `dev` profile, and serve the app,
 browser test runner and karma test runner with hot reload:
