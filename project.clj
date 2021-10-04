@@ -1,16 +1,16 @@
-(defproject shadow-clj-fullstack "0.1.0-SNAPSHOT"
+(defproject my-art-gallery "0.1.0-SNAPSHOT"
   :description "My virtual art gallery"
 
-  :dependencies [[reagent "1.1.0"]
+  :dependencies [[thheller/shadow-cljs "2.15.10"]
+                 [reagent "1.1.0"]
                  [re-frame "1.2.0"]
                  [day8.re-frame/tracing "0.6.2"]
                  [re-com "2.13.2"]
-                 [bidi "2.1.6"]
+                 [metosin/reitit "0.5.15"]
                  [clj-commons/pushy "0.3.10"]
                  [garden "1.3.10"]
                  [garden-gnome "0.1.0"]
                  [net.dhleong/spade "1.1.0"]
-
                  [binaryage/devtools "1.0.3"]
                  [day8.re-frame/re-frame-10x "1.1.11"]]
 

@@ -9,7 +9,17 @@
 (defstyles screen
   [:body {:background-color (css-var :primary)
           :margin 0}]
-  [:html :body :div#app {:height :100%}]
+  [:html :body :div#app :.main-container {:height :100%}]
+
+  [:.registration {:background (css-var :light-blue)
+                   :height :100%
+                   :padding :30px}
+   [:h1 {:font-size :3em}]]
+
+  [:.login {:background (css-var :pink)
+            :height :100%
+            :padding :30px}
+   [:h1 {:font-size :3em}]]
 
   [:.welcome {:min-height :350px
               :padding :30px

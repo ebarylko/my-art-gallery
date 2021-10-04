@@ -1,5 +1,6 @@
 {:nrepl {:port 8777}
 
+ :lein true
 
  :dev-http {8280 "resources/public"
             8290 "target/browser-test"}
