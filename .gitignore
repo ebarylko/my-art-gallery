@@ -30,4 +30,5 @@ pom.xml.asc
 # shadow-cljs cache, port files
 /.shadow-cljs/
 
-
+# Firebase
+src/my_art_gallery/fb/init.cljs
