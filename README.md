@@ -174,23 +174,13 @@ npx shadow-cljs <action> app
 ```
 ### Debug Logging
 
-<<<<<<< HEAD
-The `debug?` variable in [`config.cljs`](src/cljs/my_todo/config.cljs) defaults to `true` in
-=======
-The `debug?` variable in [`config.cljs`](src/cljs/my_gallery/config.cljs) defaults to `true` in
->>>>>>> Renamed to my-art-gallery
-[`dev`](#running-the-app) builds, and `false` in [`prod`](#production) builds.
+The `debug?` variable in [`config.cljs`](src/cljs/my_todo/config.cljs) defaults to `true` in [`dev`](#running-the-app) builds, and `false` in [`prod`](#production) builds.
 
 Use `debug?` for logging or other tasks that should run only on `dev` builds:
 
 ```clj
-<<<<<<< HEAD
-(ns my-todo.example
-  (:require [my-todo.config :as config])
-=======
 (ns my-gallery.example
   (:require [my-gallery.config :as config])
->>>>>>> Renamed to my-art-gallery
 
 (when config/debug?
   (println "This message will appear in the browser console only on dev builds."))

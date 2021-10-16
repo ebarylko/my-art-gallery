@@ -5,7 +5,7 @@
    [my-art-gallery.routing :as routing]
    [my-art-gallery.events :as events]
    [my-art-gallery.config :as config]
-   [my-art-gallery.fb.init :as frbi]))
+   [my-art-gallery.fb.core :as fb]))
 
 
 (defn dev-setup []
@@ -23,4 +23,4 @@
   (routing/init-routes!)
   (dev-setup)
   (mount-root)
-  (frbi/firebase-init!))
+  (fb/firebase-init!))

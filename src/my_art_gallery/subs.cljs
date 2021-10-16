@@ -7,3 +7,7 @@
  (fn [db]
    (:name db)))
 
+(re-frame/reg-sub
+ ::recent-galleries
+ (fn [db]
+   (:recent-galleries db)))

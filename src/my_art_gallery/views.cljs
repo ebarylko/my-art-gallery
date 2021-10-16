@@ -1,6 +1,8 @@
 (ns my-art-gallery.views
   (:require
    [re-frame.core :as re-frame]
+   [my-art-gallery.fb.firestore :as fdb]
+   [my-art-gallery.fb.events :as fev]
    [my-art-gallery.subs :as subs]))
 
 (defn gallery-card
@@ -20,13 +22,6 @@
       [:p.subtitle.is-6 instagram]]]
     [:div.content description]]])
 
-
-(def artist-info
-  {:artist "Amir Barylko"
-   :description "Good artist, lots of food"
-   :instagram "amirbarylko"
-   :painting-url "https://image.freepik.com/free-photo/oil-painting-beautiful-lotus-flower_1232-1978.jpg"
-   :avatar-url "https://image.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg"})
 
 (defn welcome-band [name]
   [:section.welcome
@@ -58,22 +53,24 @@
      [:button.button.is-warning "Continue as a user"]]]])
 
 (defn recent-galleries-band []
-  [:section.recent-galleries
-   [:div.container
-    [:div.band-title
-     [:h1 "Recent galleries"]]
-    [:div.cards.columns
-     (for [[idx info] (map-indexed vector (repeat 10 artist-info))]
-       ^{:key idx}
-       [:div.column [gallery-card info]])]]])
+  (let [rgs (re-frame/subscribe [::subs/recent-galleries])]
+    [:section.recent-galleries
+     [:div.container
+      [:div.band-title
+       [:h1 "Recent galleries"]]
+      [:div.cards.columns
+       (for [gallery @rgs]
+         ^{:key (:id gallery)}
+         [:div.column [gallery-card gallery]])]]]))
 
 (defn home-page []
   (let [name (re-frame/subscribe [::subs/name])]
     [:section.all-bands
+     [:div
+      [:button.button {:on-click #(fdb/get-galleries)} "Hey"]]
      [welcome-band @name]
      [users-band]
      [recent-galleries-band]]))
-
 
 (defn galleries-page []
   [:section.galleries

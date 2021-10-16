@@ -31,4 +31,4 @@ pom.xml.asc
 /.shadow-cljs/
 
 # Firebase
-src/my_art_gallery/fb/init.cljs
+src/my_art_gallery/fb/config.cljs
