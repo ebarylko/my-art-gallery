@@ -25,6 +25,12 @@
               :padding :30px
               :background (css-var :light-blue)}]
 
+  [:.gallery-paintings {:background (css-var :pink)
+            :height :100%
+            :padding :30px}
+   [:h1 {:font-size :3em}]]
+  
+
   [:.band-title
    [:h1 {:width :80%
          :font-size :3em

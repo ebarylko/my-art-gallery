@@ -10,7 +10,9 @@
 (defn coll-ref [path]
   (fs/collection (db) path))
 
-(defn document->clj [doc]
+(defn document->clj
+  "Returns a pair [id document] from the Firestore document argument"
+  [doc]
   [(aget doc "id")
    (js->clj (js-invoke doc "data") :keywordize-keys true)])
 
@@ -39,34 +41,16 @@
   ([args]
    (document-set args {})))
 
-(defn query [ref]
-  (.get ref))
+(defn query [ref] (.get ref))
 
 
-(defn ->gallery [[id glr]]
-  [id
-   (st/rename-keys glr {:paintingUrl :painting-url
-                        :createdOn :created-on
-                        :avatarUrl :avatar-url})])
-
-
-(defn get-collection [collection on-success on-error]
+(defn fetch-collection [collection on-success on-error]
   (-> collection
       coll-ref
       fs/getDocs
-      (.then #(re-frame/dispatch-sync [on-success (map ->gallery (snapshot->clj %))]))
-      (.catch #(re-frame/dispatch-sync [on-error]))))
+      (.then (comp on-success snapshot->clj))
+      (.catch on-error)))
 
-(defn get-galleries [on-success on-error]
-  (-> "galleries"
-      (get-collection on-success on-error)))
-
-(defn get-galleries1 []
-  (-> (db)
-      (fs/collection "galleries")
-      fs/getDocs
-      (.then #(println "Got galleries" (snapshot->clj %)))
-      (.catch #(println "Error getting galleries :( !"))))
 
 (defn get-document [collection id]
   (query (doc-ref collection id)))

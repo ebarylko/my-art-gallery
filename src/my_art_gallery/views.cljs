@@ -1,15 +1,37 @@
 (ns my-art-gallery.views
   (:require
+   [reitit.frontend.easy :as rfe]
    [re-frame.core :as re-frame]
-   [my-art-gallery.fb.events :as fev]
    [my-art-gallery.subs :as subs]))
 
+(defn href
+  "Return relative url for given route. Url can be used in HTML links."
+  ([k]
+   (href k nil nil))
+  ([k params]
+   (href k params nil))
+  ([k params query]
+   (rfe/href k params query)))
+
+(defn gallery-content []
+  (let [pts (re-frame/subscribe [::subs/gallery-paintings])]
+    [:section.gallery-paintings
+     "Content for gallery "
+     [:span (count @pts)]
+     [:div.paintings
+      (for [[id {:keys [name paintingUrl]}] @pts]
+        ^{:key id}
+        [:div.painting
+         [:div.title name]
+         [:img {:src paintingUrl}]])]]))
+
 (defn gallery-card
-  [{:keys [artist painting-url instagram avatar-url description]}]
+  [id {:keys [artist painting-url instagram avatar-url description]}]
   [:div.card
    [:div.card-image
     [:figure.image.is-4by3
-     [:img {:alt "Painting",:src painting-url}]]]
+     [:a {:href (href :galleries {:id id})}
+      [:img {:alt "Painting",:src painting-url}]]]]
    [:div.card-content
     [:div.media
      [:div.media-left
@@ -60,15 +82,11 @@
       [:div.cards.columns
        (for [[id gallery] @rgs]
            ^{:key id}
-           [:div.column [gallery-card gallery]])]]]))
+           [:div.column [gallery-card id gallery]])]]]))
 
 (defn home-page []
   (let [name (re-frame/subscribe [::subs/name])]
     [:section.all-bands
-     [:div
-      [:button.button
-       {:on-click fev/fetch-recent-galleries}
-       "Hey"]]
      [welcome-band @name]
      [users-band]
      [recent-galleries-band]]))

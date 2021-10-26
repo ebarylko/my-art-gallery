@@ -11,3 +11,9 @@
  ::recent-galleries
  (fn [db]
    (:recent-galleries db)))
+
+
+(re-frame/reg-sub
+ ::gallery-paintings
+ (fn [db]
+   (:gallery-paintings db)))

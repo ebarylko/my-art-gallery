@@ -10,34 +10,21 @@
  (fn [args]
    (firebase-auth/email-login args)))
 
+
 (re-frame/reg-event-fx
  ::email-login
  interceptors
  (fn [_ [args]]
    {::email-login! args}))
 
+
 (re-frame/reg-fx
- ::query
- (fn [{:keys [:query :on-success :on-error]}]
-   (-> query
-       (.then #(on-success %))
-       (.catch #(on-error %)))))
+ ::fetch-collection
+ (fn [{:keys [collection event-success event-error]}]
+   (fbf/fetch-collection
+    collection
+    #(re-frame/dispatch-sync [event-success %])
+    #(re-frame/dispatch-sync [event-error]))))
 
 
-(re-frame/reg-event-db
- ::fetch-recent-galleries-ok
- (fn [db [_ galleries]]
-   (assoc db :recent-galleries galleries)))
-
-
-(re-frame/reg-event-db
- ::fetch-recent-galleries-error
- (fn [db]
-   (assoc db :error "Can't fetch recent galleries :(")))
-
-
-(defn fetch-recent-galleries []
-  (fbf/get-galleries
-   ::fetch-recent-galleries-ok
-   ::fetch-recent-galleries-error))
 

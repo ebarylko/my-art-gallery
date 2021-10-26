@@ -6,16 +6,8 @@
    [reitit.coercion.spec :as rss]
    [reitit.core :as r]
    [reitit.frontend :as rf]
+   [my-art-gallery.events :as events]
    [my-art-gallery.views :as views]))
-
-(defn href
-  "Return relative url for given route. Url can be used in HTML links."
-  ([k]
-   (href k nil nil))
-  ([k params]
-   (href k params nil))
-  ([k params query]
-   (rfe/href k params query)))
 
 (def routes
   ["/"
@@ -39,7 +31,17 @@
      :link-text "Login"
      :controllers
      [{:start (fn [& params] (js/console.log "Entering Login"))
-       :stop  (fn [& params] (js/console.log "Leaving Login"))}]}]])
+       :stop  (fn [& params] (js/console.log "Leaving Login"))}]}]
+   ["galleries/:id"
+    {:name      :galleries
+     :view      views/gallery-content
+     :controllers
+     [{:parameters {:path [:id]}
+       :start (fn [params]
+                (let [gid (-> params :path :id)]
+                  (js/console.log "Loading gallery " gid)
+                  (re-frame/dispatch [::events/load-gallery gid])))
+       :stop  (fn [params] (js/console.log "Leaving gallery"))}]}] ])
 
 (defn on-navigate [new-match]
   (when new-match
@@ -88,8 +90,8 @@
 (defn top-menu [{:keys [router current-route]}]
   [:nav {:class "navbar" :role "navigation" :aria-label "main navigation"}
    [:div {:class "navbar-brand"}
-    [:a {:class "navbar-item" :href "https://bulma.io"}
-     [:img {:src "https://bulma.io/images/bulma-logo.png" :width "112" :height "28"}]]
+    [:a {:class "navbar-item" :href (views/href :home)}
+     [:img {:src "/img/logo.png" }]]
 
     [:a {:role "button" :class "navbar-burger" :aria-label "menu"
          :aria-expanded "false" :data-target "mvgTopMenu"}
@@ -99,15 +101,15 @@
 
    [:div#mvgTopMenu.navbar-menu
     [:div.navbar-start
-     [:a.navbar-item {:href (href :home)
+     [:a.navbar-item {:href (views/href :home)
                       :class (when (= :home (-> current-route :data :name)) "is-selected")}
       "Home"]]
     [:div.navbar-end
      [:div.navbar-item
       [:div.buttons
-       [:a.button.is-primary {:href (href :registration)}
+       [:a.button.is-primary {:href (views/href :registration)}
         [:strong "Sign up"]]
-       [:a.button.is-light {:href (href :login)}
+       [:a.button.is-light {:href (views/href :login)}
         "Log in"]]]]]])
 
 (defn router-component [{:keys [router]}]
