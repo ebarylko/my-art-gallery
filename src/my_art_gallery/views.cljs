@@ -1,7 +1,6 @@
 (ns my-art-gallery.views
   (:require
    [re-frame.core :as re-frame]
-   [my-art-gallery.fb.firestore :as fdb]
    [my-art-gallery.fb.events :as fev]
    [my-art-gallery.subs :as subs]))
 
@@ -59,15 +58,17 @@
       [:div.band-title
        [:h1 "Recent galleries"]]
       [:div.cards.columns
-       (for [gallery @rgs]
-         ^{:key (:id gallery)}
-         [:div.column [gallery-card gallery]])]]]))
+       (for [[id gallery] @rgs]
+           ^{:key id}
+           [:div.column [gallery-card gallery]])]]]))
 
 (defn home-page []
   (let [name (re-frame/subscribe [::subs/name])]
     [:section.all-bands
      [:div
-      [:button.button {:on-click #(fdb/get-galleries)} "Hey"]]
+      [:button.button
+       {:on-click fev/fetch-recent-galleries}
+       "Hey"]]
      [welcome-band @name]
      [users-band]
      [recent-galleries-band]]))

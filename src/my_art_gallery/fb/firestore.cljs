@@ -1,5 +1,6 @@
 (ns my-art-gallery.fb.firestore
   (:require [my-art-gallery.fb.core :as fb]
+            [re-frame.core :as re-frame]
             ["firebase/firestore/lite" :as fs]))
 
 (defn db []
@@ -9,19 +10,11 @@
   (fs/collection (db) path))
 
 (defn document->clj [doc]
-  {(aget doc "id") (js->clj (js-invoke doc "data"))})
+  [(aget doc "id") (js->clj (js-invoke doc "data"))])
 
 (defn snapshot->clj [snapshot]
   (map (fn [doc] (document->clj doc))
        (.-docs ^js snapshot)))
-
-(defn get-galleries []
-  (-> (db)
-      (fs/collection "galleries")
-      fs/getDocs
-      (.then #(println "Got galleries" (snapshot->clj %)))
-      (.catch #(println "Error getting galleries :( !"))
-      ))
 
 (defn doc-ref
   ([path] (.doc (db) path))
@@ -47,8 +40,23 @@
 (defn query [ref]
   (.get ref))
 
-(defn get-collection [collection]
-  (query (coll-ref collection)))
+(defn get-collection [collection on-success on-error]
+  (-> collection
+      coll-ref
+      fs/getDocs
+      (.then #(re-frame/dispatch-sync [on-success (snapshot->clj %)]))
+      (.catch #(re-frame/dispatch-sync [on-error]))))
+
+(defn get-galleries [on-success on-error]
+  (-> "galleries"
+      (get-collection on-success on-error)))
+
+(defn get-galleries1 []
+  (-> (db)
+      (fs/collection "galleries")
+      fs/getDocs
+      (.then #(println "Got galleries" (snapshot->clj %)))
+      (.catch #(println "Error getting galleries :( !"))))
 
 (defn get-document [collection id]
   (query (doc-ref collection id)))
@@ -63,17 +71,17 @@
    (.delete (doc-ref collection id))))
 
 (defn where [coll-ref & [operator k value]]
-  (js-invoke coll-ref "where" k operator value))
+  (fs/where coll-ref k operator value))
 
 (defn order-by [coll-ref field & direction]
-  (apply js-invoke coll-ref "orderBy" field direction))
+  (apply fs/orderBy coll-ref field direction))
 
 (defn start-at [coll-ref index]
-  (js-invoke coll-ref "startAt" index))
+  (fs/startAt coll-ref index))
 
 (defn start-after [coll-ref index]
-  (js-invoke coll-ref "startAfter" index))
+  (fs/startAfter coll-ref index))
 
 (defn limit [coll-ref n]
-  (js-invoke coll-ref "limit" n))
+  (fs/limit coll-ref n))
 
