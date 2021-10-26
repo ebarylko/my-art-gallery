@@ -20,7 +20,7 @@
 (defn current-user []
   (-> Firebase .auth .-currentUser))
 
-(defn update-user-profile [user {:keys [:photo-url :display-name]}]
+#_(defn update-user-profile [user {:keys [:photo-url :display-name]}]
   (-> user
       (.updateProfile ^js
                       (clj->js {:displayName display-name

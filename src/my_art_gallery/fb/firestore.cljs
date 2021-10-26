@@ -1,6 +1,7 @@
 (ns my-art-gallery.fb.firestore
   (:require [my-art-gallery.fb.core :as fb]
             [re-frame.core :as re-frame]
+            [clojure.set :as st]
             ["firebase/firestore/lite" :as fs]))
 
 (defn db []
@@ -10,7 +11,8 @@
   (fs/collection (db) path))
 
 (defn document->clj [doc]
-  [(aget doc "id") (js->clj (js-invoke doc "data"))])
+  [(aget doc "id")
+   (js->clj (js-invoke doc "data") :keywordize-keys true)])
 
 (defn snapshot->clj [snapshot]
   (map (fn [doc] (document->clj doc))
@@ -40,11 +42,19 @@
 (defn query [ref]
   (.get ref))
 
+
+(defn ->gallery [[id glr]]
+  [id
+   (st/rename-keys glr {:paintingUrl :painting-url
+                        :createdOn :created-on
+                        :avatarUrl :avatar-url})])
+
+
 (defn get-collection [collection on-success on-error]
   (-> collection
       coll-ref
       fs/getDocs
-      (.then #(re-frame/dispatch-sync [on-success (snapshot->clj %)]))
+      (.then #(re-frame/dispatch-sync [on-success (map ->gallery (snapshot->clj %))]))
       (.catch #(re-frame/dispatch-sync [on-error]))))
 
 (defn get-galleries [on-success on-error]

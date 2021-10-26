@@ -27,7 +27,6 @@
 (re-frame/reg-event-db
  ::fetch-recent-galleries-ok
  (fn [db [_ galleries]]
-   (println galleries)
    (assoc db :recent-galleries galleries)))
 
 
