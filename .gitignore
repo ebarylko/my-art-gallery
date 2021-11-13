@@ -32,3 +32,4 @@ pom.xml.asc
 
 # Firebase
 src/my_art_gallery/fb/config.cljs
+.firebase/

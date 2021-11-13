@@ -18,12 +18,13 @@
     [:section.gallery-paintings
      "Content for gallery "
      [:span (count @pts)]
-     [:div.paintings
+     [:div.paintings.columns.is-multiline
       (for [[id {:keys [name paintingUrl]}] @pts]
         ^{:key id}
-        [:div.painting
+        [:div.painting.column.is-one-quarter
          [:div.title name]
-         [:img {:src paintingUrl}]])]]))
+         [:figure.image.is-square
+         [:img {:src paintingUrl}]]])]]))
 
 (defn gallery-card
   [id {:keys [artist painting-url instagram avatar-url description]}]
