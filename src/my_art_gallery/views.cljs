@@ -1,14 +1,38 @@
 (ns my-art-gallery.views
   (:require
+   [reitit.frontend.easy :as rfe]
    [re-frame.core :as re-frame]
    [my-art-gallery.subs :as subs]))
 
+(defn href
+  "Return relative url for given route. Url can be used in HTML links."
+  ([k]
+   (href k nil nil))
+  ([k params]
+   (href k params nil))
+  ([k params query]
+   (rfe/href k params query)))
+
+(defn gallery-content []
+  (let [pts (re-frame/subscribe [::subs/gallery-paintings])]
+    [:section.gallery-paintings
+     "Content for gallery "
+     [:span (count @pts)]
+     [:div.paintings.columns.is-multiline
+      (for [[id {:keys [name paintingUrl]}] @pts]
+        ^{:key id}
+        [:div.painting.column.is-one-quarter
+         [:div.title name]
+         [:figure.image.is-square
+         [:img {:src paintingUrl}]]])]]))
+
 (defn gallery-card
-  [{:keys [artist painting-url instagram avatar-url description]}]
+  [id {:keys [artist painting-url instagram avatar-url description]}]
   [:div.card
    [:div.card-image
     [:figure.image.is-4by3
-     [:img {:alt "Painting",:src painting-url}]]]
+     [:a {:href (href :galleries {:id id})}
+      [:img {:alt "Painting",:src painting-url}]]]]
    [:div.card-content
     [:div.media
      [:div.media-left
@@ -20,13 +44,6 @@
       [:p.subtitle.is-6 instagram]]]
     [:div.content description]]])
 
-
-(def artist-info
-  {:artist "Amir Barylko"
-   :description "Good artist, lots of food"
-   :instagram "amirbarylko"
-   :painting-url "https://image.freepik.com/free-photo/oil-painting-beautiful-lotus-flower_1232-1978.jpg"
-   :avatar-url "https://image.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg"})
 
 (defn welcome-band [name]
   [:section.welcome
@@ -58,14 +75,15 @@
      [:button.button.is-warning "Continue as a user"]]]])
 
 (defn recent-galleries-band []
-  [:section.recent-galleries
-   [:div.container
-    [:div.band-title
-     [:h1 "Recent galleries"]]
-    [:div.cards.columns
-     (for [[idx info] (map-indexed vector (repeat 10 artist-info))]
-       ^{:key idx}
-       [:div.column [gallery-card info]])]]])
+  (let [rgs (re-frame/subscribe [::subs/recent-galleries])]
+    [:section.recent-galleries
+     [:div.container
+      [:div.band-title
+       [:h1 "Recent galleries"]]
+      [:div.cards.columns
+       (for [[id gallery] @rgs]
+           ^{:key id}
+           [:div.column [gallery-card id gallery]])]]]))
 
 (defn home-page []
   (let [name (re-frame/subscribe [::subs/name])]
@@ -73,7 +91,6 @@
      [welcome-band @name]
      [users-band]
      [recent-galleries-band]]))
-
 
 (defn galleries-page []
   [:section.galleries

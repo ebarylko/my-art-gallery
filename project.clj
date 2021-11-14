@@ -6,6 +6,7 @@
                  [re-frame "1.2.0"]
                  [day8.re-frame/tracing "0.6.2"]
                  [re-com "2.13.2"]
+                 [cljs-bean/cljs-bean "1.5.0"]
                  [metosin/reitit "0.5.15"]
                  [clj-commons/pushy "0.3.10"]
                  [garden "1.3.10"]
