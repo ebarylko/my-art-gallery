@@ -11,37 +11,37 @@
 
 (def routes
   ["/"
-   [""
-    {:name      :home
-     :view      views/home-page
-     :link-text "Home"
-     :controllers
-     [{:start (fn [& params](js/console.log "Entering home page"))
-       :stop  (fn [& params] (js/console.log "Leaving home page"))}]}]
-   ["registration"
-    {:name      :registration
-     :view      views/registration-page
-     :link-text "Sign up"
-     :controllers
-     [{:start (fn [& params] (js/console.log "Entering regs"))
-       :stop  (fn [& params] (js/console.log "Leaving regs"))}]}]
-   ["login"
-    {:name      :login
-     :view      views/login-page
-     :link-text "Login"
-     :controllers
-     [{:start (fn [& params] (js/console.log "Entering Login"))
-       :stop  (fn [& params] (js/console.log "Leaving Login"))}]}]
+   ["" {:name      :home
+        :view      views/home-page
+        :link-text "Home"
+        :controllers
+        [{:start (fn [& params](js/console.log "Entering home page"))
+          :stop  (fn [& params] (js/console.log "Leaving home page"))}]}]
+   ["registration" {:name      :registration
+                    :view      views/registration-page
+                    :link-text "Sign up"
+                    :controllers
+                    [{:start (fn [& params] (js/console.log "Entering regs"))
+                      :stop  (fn [& params] (js/console.log "Leaving regs"))}]}]
+   ["login" {:name      :login
+             :view      views/login-page
+             :link-text "Login"
+             :controllers
+             [{:start (fn [& params] (js/console.log "Entering Login"))
+               :stop  (fn [& params] (js/console.log "Leaving Login"))}]}]
    ["galleries/:id"
-    {:name      :galleries
-     :view      views/gallery-content
-     :controllers
-     [{:parameters {:path [:id]}
-       :start (fn [params]
-                (let [gid (-> params :path :id)]
-                  (js/console.log "Loading gallery " gid)
-                  (re-frame/dispatch [::events/load-gallery gid])))
-       :stop  (fn [params] (js/console.log "Leaving gallery"))}]}] ])
+    ["" {:name      :galleries
+         :view      views/gallery-content
+         :controllers [{:parameters {:path [:id]}
+                        :start (fn [params]
+                                 (let [gid (-> params :path :id)]
+                                   (js/console.log "Loading gallery " gid)
+                                   (re-frame/dispatch [::events/load-gallery gid])))
+                        :stop  (fn [params] (js/console.log "Leaving gallery"))}]}]
+    ["/paintings/:pid" {:name :gallery-painting
+                        :view views/gallery-painting
+                        :controllers [{:parameters {:path [:pid]}}]}]]])
+
 
 (defn on-navigate [new-match]
   (when new-match

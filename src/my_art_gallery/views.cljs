@@ -23,8 +23,20 @@
         ^{:key id}
         [:div.painting.column.is-one-quarter
          [:div.title name]
-         [:figure.image.is-square
-         [:img {:src paintingUrl}]]])]]))
+         [:a {:href (href :gallery-painting {:pid id :id 1})}
+
+          [:figure.image.is-square
+           [:img {:src paintingUrl}]]]])]]))
+
+
+(defn gallery-painting
+  "this is for getting the specific painting"
+  []
+  [:section.painting
+   [:div.painting-title "Flames"]
+   [:div
+    [:img {:src "https://images.unsplash.com/photo-1490845433441-5174fe36bc30?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1632&q=80"}]] ]
+  )
 
 (defn gallery-card
   [id {:keys [artist painting-url instagram avatar-url description]}]
