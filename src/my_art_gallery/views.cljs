@@ -32,10 +32,25 @@
 (defn gallery-painting
   "this is for getting the specific painting"
   []
-  [:section.painting
-   [:div.painting-title "Flames"]
-   [:div
-    [:img {:src "https://images.unsplash.com/photo-1490845433441-5174fe36bc30?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1632&q=80"}]] ]
+  [:section.gallery-painting.card
+   [:header.card-header
+    [:p.card-header-title "Flames"]]
+   [:div.card-image
+    [:figure.image.painting
+     [:img {:src "https://images.unsplash.com/photo-1490845433441-5174fe36bc30?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1632&q=80"}] ]
+    ]
+   [:div.card-content
+    [:div.content "flames burning in the dark night"]
+    [:div.media
+     [:div.media-left
+      [:figure.image.is-48x48
+       [:img
+        {:alt "Avatar",:src "https://images.unsplash.com/photo-1631913290783-490324506193?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"}]]]
+     [:div.media-content
+      [:p.title.is-5 "Author name"]
+      [:p.subtitle.is-6 "fiery-heart"]]]
+    ]
+   ]
   )
 
 (defn gallery-card

@@ -30,6 +30,12 @@
             :padding :30px}
    [:h1 {:font-size :3em}]]
   
+  [:.gallery-painting {:background (css-var :light-blue)
+                       :height :100%
+                       :padding :30px
+                       :color :white}
+   [:painting {:box-shadow "5px 5px"}]
+   ]
 
   [:.band-title
    [:h1 {:width :80%
