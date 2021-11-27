@@ -32,24 +32,27 @@
 (defn gallery-painting
   "this is for getting the specific painting"
   []
-  [:section.gallery-painting.card
-   [:header.card-header
-    [:p.card-header-title "Flames"]]
-   [:div.card-image
-    [:figure.image.painting
-     [:img {:src "https://images.unsplash.com/photo-1490845433441-5174fe36bc30?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1632&q=80"}] ]
-    ]
-   [:div.card-content
-    [:div.content "flames burning in the dark night"]
-    [:div.media
-     [:div.media-left
-      [:figure.image.is-48x48
-       [:img
-        {:alt "Avatar",:src "https://images.unsplash.com/photo-1631913290783-490324506193?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"}]]]
-     [:div.media-content
-      [:p.title.is-5 "Author name"]
-      [:p.subtitle.is-6 "fiery-heart"]]]
-    ]
+  [:section.gallery-painting
+   [:div.container.is-widescreen
+    [:div.card
+     [:header.card-header
+      [:p.card-header-title "Flames"]]
+     [:div.card-image
+      [:figure.image.painting
+       [:img {:src "https://images.unsplash.com/photo-1490845433441-5174fe36bc30?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1632&q=80"}] ]
+      ]
+     [:div.card-content
+      [:div.media
+       [:div.media-left
+        [:figure.image.is-48x48
+         [:img
+          {:alt "Avatar",:src "https://images.unsplash.com/photo-1631913290783-490324506193?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"}]]]
+       [:div.media-content
+        [:p.title.is-5 "Author name"]
+        [:p.subtitle.is-6
+         [:a {:href "https://www.instagram.com/georgiepuddingnpie"} "@fiery-heart"]]]]
+      [:div.content "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas faucibus in lectus eget dictum. Aenean eu elit quam. Pellentesque ultrices cursus eros, sed elementum mi imperdiet ut. Proin eu lectus ac eros pretium gravida. Sed nibh arcu, gravida bibendum lectus in, porttitor mattis eros. In eget erat at felis tincidunt faucibus. In hac habitasse platea dictumst. Praesent blandit imperdiet justo, scelerisque placerat nunc aliquam at. Integer varius, arcu eget cursus ultrices, sapien ligula maximus orci, nec rhoncus ligula odio sit amet sem. Nam a tortor at elit iaculis sollicitudin at vel augue. Etiam faucibus augue eget felis bibendum iaculis. Cras ac justo augue.flames burning in the dark night"]
+      ]]]
    ]
   )
 
