@@ -31,11 +31,11 @@
    [:h1 {:font-size :3em}]]
   
   [:.gallery-painting {:background (css-var :light-blue)
-                       :height :100%
                        :padding :30px
                        :color :white}
-   [:painting {:box-shadow "5px 5px"}]
-   ]
+   [:.painting
+    [:header {:box-shadow :none}]
+    [:.card-image {:padding "1.5rem"}]]]
 
   [:.band-title
    [:h1 {:width :80%
