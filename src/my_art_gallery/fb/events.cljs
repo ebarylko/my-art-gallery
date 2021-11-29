@@ -26,5 +26,11 @@
     #(re-frame/dispatch-sync [event-success %])
     #(re-frame/dispatch-sync [event-error]))))
 
+(re-frame/reg-fx
+ ::fetch-doc
+ (fn [{:keys [path event-success event-error]}]
+   (fbf/fetch-doc path
+                  #(re-frame/dispatch-sync [event-success %])
+                  #(re-frame/dispatch-sync [event-error]))))
 
 

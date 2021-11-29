@@ -12,6 +12,13 @@
    db/default-db))
 
 (re-frame/reg-event-fx
+ ::load-painting
+ (fn [_ [_ id pid] ]
+   {::fbe/fetch-doc {:path (str "galleries/" id "/paintings/" pid)
+                     :event-success ::load-doc-ok
+                     :event-error ::load-doc-error}}))
+
+(re-frame/reg-event-fx
  ::load-gallery
  (fn [_ [_ id]]
    {::fbe/fetch-collection
@@ -55,5 +62,16 @@
  (fn [db]
    (assoc db :error "Can't fetch recent galleries :(")))
 
+(defn ->painting [[id pnt]]
+  [id
+   (st/rename-keys pnt {:paintingUrl :painting-url})])
 
+(re-frame/reg-event-db
+ ::load-doc-ok
+ (fn [db [_ painting]]
+   (assoc db :painting (->painting painting))))
 
+(re-frame/reg-event-db
+ ::load-doc-error
+ (fn [db]
+   (assoc db :error "Can't fetch painting :(")))

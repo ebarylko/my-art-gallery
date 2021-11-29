@@ -38,9 +38,15 @@
                                    (js/console.log "Loading gallery " gid)
                                    (re-frame/dispatch [::events/load-gallery gid])))
                         :stop  (fn [params] (js/console.log "Leaving gallery"))}]}]
+
     ["/paintings/:pid" {:name :gallery-painting
                         :view views/gallery-painting
-                        :controllers [{:parameters {:path [:pid]}}]}]]])
+                        :controllers [{:parameters {:path [:id :pid]}
+                                       :start (fn [params]
+                                                (let [gid (-> params :path :id)
+                                                      pid (-> params :path :pid)]
+                                                  (js/console.log "Loading gallery " gid "with paiting" pid)
+                                                  (re-frame/dispatch [::events/load-painting gid pid])))}]}]]])
 
 
 (defn on-navigate [new-match]

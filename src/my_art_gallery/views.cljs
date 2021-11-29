@@ -14,7 +14,9 @@
    (rfe/href k params query)))
 
 (defn gallery-content []
-  (let [pts (re-frame/subscribe [::subs/gallery-paintings])]
+  (let [pts (re-frame/subscribe [::subs/gallery-paintings])
+        route (re-frame/subscribe [::subs/current-route])
+        gid (-> @route :path-params :id)]
     [:section.gallery-paintings
      "Content for gallery "
      [:span (count @pts)]
@@ -23,8 +25,7 @@
         ^{:key id}
         [:div.painting.column.is-one-quarter
          [:div.title name]
-         [:a {:href (href :gallery-painting {:pid id :id 1})}
-
+         [:a {:href (href :gallery-painting {:pid id :id gid})}
           [:figure.image.is-square
            [:img {:src paintingUrl}]]]])]]))
 
@@ -32,28 +33,32 @@
 (defn gallery-painting
   "this is for getting the specific painting"
   []
-  [:section.gallery-painting
-   [:div.container.is-widescreen
-    [:div.card.painting
-     [:header.card-header
-      [:p.card-header-title "Flames"]]
-     [:div.card-image
-      [:figure.image.painting
-       [:img {:src "https://images.unsplash.com/photo-1490845433441-5174fe36bc30?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1632&q=80"}]]]
-     [:div.card-content
-      [:div.media
-       [:div.media-left
-        [:figure.image.is-48x48
-         [:img
-          {:alt "Avatar",:src "https://images.unsplash.com/photo-1631913290783-490324506193?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"}]]]
-       [:div.media-content
-        [:p.title.is-5 "Author name"]
-        [:p.subtitle.is-6
-         [:a {:href "https://www.instagram.com/georgiepuddingnpie"} "@fiery-heart"]]]]
-      [:div.content "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas faucibus in lectus eget dictum. Aenean eu elit quam. Pellentesque ultrices cursus eros, sed elementum mi imperdiet ut. Proin eu lectus ac eros pretium gravida. Sed nibh arcu, gravida bibendum lectus in, porttitor mattis eros. In eget erat at felis tincidunt faucibus. In hac habitasse platea dictumst. Praesent blandit imperdiet justo, scelerisque placerat nunc aliquam at. Integer varius, arcu eget cursus ultrices, sapien ligula maximus orci, nec rhoncus ligula odio sit amet sem. Nam a tortor at elit iaculis sollicitudin at vel augue. Etiam faucibus augue eget felis bibendum iaculis. Cras ac justo augue.flames burning in the dark night"]]
-     [:footer.card-footer
-      [:div.card-footer-item
-       [:a {:href (href :galleries {:id 1})} "Back to gallery"]]]]]])
+  (let [[id pnt] @(re-frame/subscribe [::subs/painting])
+        route (re-frame/subscribe [::subs/current-route])
+        gid (-> @route :path-params :id)]
+    (js/console.log pnt)
+    [:section.gallery-painting
+     [:div.container.is-widescreen
+      [:div.card.painting
+       [:header.card-header
+        [:p.card-header-title (:name pnt)]]
+       [:div.card-image
+        [:figure.image.painting
+         [:img {:src (:painting-url pnt) }]]]
+       [:div.card-content
+        [:div.media
+         [:div.media-left
+          [:figure.image.is-48x48
+           [:img
+            {:alt "Avatar",:src "https://images.unsplash.com/photo-1631913290783-490324506193?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"}]]]
+         [:div.media-content
+          [:p.title.is-5 "Author name"]
+          [:p.subtitle.is-6
+           [:a {:href "https://www.instagram.com/georgiepuddingnpie"} "@fiery-heart"]]]]
+        [:div.content (:description pnt)]]
+       [:footer.card-footer
+        [:div.card-footer-item
+         [:a {:href (href :galleries {:id gid})} "Back to gallery"]]]]]]))
 
 (defn gallery-card
   [id {:keys [artist painting-url instagram avatar-url description]}]

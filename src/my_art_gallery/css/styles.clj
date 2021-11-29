@@ -29,7 +29,7 @@
             :height :100%
             :padding :30px}
    [:h1 {:font-size :3em}]]
-  
+
   [:.gallery-painting {:background (css-var :light-blue)
                        :padding :30px
                        :color :white}

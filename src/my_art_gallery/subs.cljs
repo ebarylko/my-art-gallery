@@ -3,6 +3,11 @@
    [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub
+ ::current-route
+ (fn [db]
+   (:current-route db)))
+
+(re-frame/reg-sub
  ::name
  (fn [db]
    (:name db)))
@@ -17,3 +22,8 @@
  ::gallery-paintings
  (fn [db]
    (:gallery-paintings db)))
+
+
+(re-frame/reg-sub
+ ::painting
+ (fn [db] (:painting db)))
