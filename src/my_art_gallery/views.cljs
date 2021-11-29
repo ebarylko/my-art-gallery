@@ -122,9 +122,10 @@
 (defn home-page []
   (let [name (re-frame/subscribe [::subs/name])]
     [:section.all-bands
-     [welcome-band @name]
+     [recent-galleries-band]
      [users-band]
-     [recent-galleries-band]]))
+     [welcome-band @name]
+     ]))
 
 (defn galleries-page []
   [:section.galleries

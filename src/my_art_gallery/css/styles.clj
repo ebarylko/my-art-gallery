@@ -23,7 +23,7 @@
 
   [:.welcome {:min-height :350px
               :padding :30px
-              :background (css-var :light-blue)}]
+              :background (css-var :charcoal)}]
 
   [:.gallery-paintings {:background (css-var :pink)
             :height :100%
@@ -56,7 +56,8 @@
                :font-size :larger}]]]
 
   [:.recent-galleries {:height :auto
-                       :background :white}
-   [:.band-title {:color (css-var :orange)}]
+                       :background (css-var :light-blue)
+                       :padding :1.5rem}
+   [:.band-title {:color :white}]
    [:.cards {:flex-wrap :wrap}
     [:.card {:min-width :200px}]]])
