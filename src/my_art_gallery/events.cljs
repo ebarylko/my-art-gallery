@@ -38,7 +38,7 @@
    (assoc db :error "Can't load gallery :(")))
 
 (re-frame/reg-event-fx
- ::fb-initialized
+ ::load-recent-galleries
  (fn []
    {::fbe/fetch-collection {:collection "galleries"
                             :event-success ::fetch-recent-galleries-ok

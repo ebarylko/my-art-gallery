@@ -15,7 +15,6 @@
         :view      views/home-page
         :link-text "Home"
         :controllers [{:start (fn [& params]
-                                (js/console.log "Entering home page")
                                 (re-frame/dispatch [::events/load-recent-galleries]))}]}]
    ["registration" {:name      :registration
                     :view      views/registration-page

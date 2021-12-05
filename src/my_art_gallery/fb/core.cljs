@@ -1,5 +1,5 @@
 (ns my-art-gallery.fb.core
-  (:require ["firebase/app" :as Firebase]
+  (:require ["firebase/app" :as fba]
             [re-frame.core :as re-frame]
             [my-art-gallery.fb.config :as cfg]))
 
@@ -7,9 +7,9 @@
 
 (defn init [config]
   (when-not @firebase-instance
-    (reset! firebase-instance (-> Firebase (.initializeApp (clj->js config))))
-    (println "Firebase initialized!")
-    ))
+    (let [cfg (clj->js config)]
+      (reset! firebase-instance (fba/initializeApp cfg))
+      (println "Firebase initialized!"))))
 
 (defn firebase-init!
   []

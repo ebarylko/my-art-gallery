@@ -20,8 +20,10 @@
 (defn fetch-collection [path on-success on-error]
   (println "The db" (db) path)
   (-> (db)
-      (fs/collection path)
+      (fs/collection "/galleries")
       fs/getDocs
+      (.then #(println "Got galleries"))
+      (.catch #(println "Some rror fetching galleries"))
       #_#_(.then (comp on-success snapshot->clj))
       (.catch on-error)))
 
