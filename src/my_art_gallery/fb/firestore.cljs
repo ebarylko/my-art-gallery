@@ -18,13 +18,10 @@
        (.-docs ^js snapshot)))
 
 (defn fetch-collection [path on-success on-error]
-  (println "The db" (db) path)
   (-> (db)
-      (fs/collection "/galleries")
+      (fs/collection path)
       fs/getDocs
-      (.then #(println "Got galleries"))
-      (.catch #(println "Some rror fetching galleries"))
-      #_#_(.then (comp on-success snapshot->clj))
+      (.then (comp on-success snapshot->clj))
       (.catch on-error)))
 
 (defn doc->clj [doc]

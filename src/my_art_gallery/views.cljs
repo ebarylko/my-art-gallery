@@ -74,9 +74,8 @@
        [:img
         {:alt "Avatar",:src avatar-url}]]]
      [:div.media-content
-      [:p.title.is-4 (clojure.string/join "-" (keys glr))]
-      [:p.subtitle.is-6 instagram]
-      [:p artist-ref]]]
+      [:p.title.is-4 artist-ref]
+      [:p.subtitle.is-6 instagram]]]
     [:div.content description]]])
 
 
