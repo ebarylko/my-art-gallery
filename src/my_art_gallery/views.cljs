@@ -29,16 +29,18 @@
         route (re-frame/subscribe [::subs/current-route])
         gid (-> @route :path-params :id)]
     [:section.gallery-paintings
-     "Content for gallery "
-     [:span (count @pts)]
-     [:div.paintings.columns.is-multiline
-      (for [[id {:keys [name paintingUrl]}] @pts]
-        ^{:key id}
-        [:div.painting.column.is-one-quarter
-         [:div.title name]
-         [:a {:href (href :gallery-painting {:pid id :id gid})}
-          [:figure.image.is-square
-           [:img {:src paintingUrl}]]]])]]))
+     [:div.container.box
+      [:h1 "Content for gallery ("
+       [:span (count @pts)]
+       "paintings)"]
+      [:div.paintings.columns.is-multiline
+       (for [[id {:keys [name painting-url]}] @pts]
+         ^{:key id}
+         [:div.painting.column.is-one-quarter
+          [:div.title name]
+          [:a {:href (href :gallery-painting {:pid id :id gid})}
+           [:figure.image.is-square
+            [:img {:src painting-url}]]]])]]]))
 
 
 (defn gallery-painting

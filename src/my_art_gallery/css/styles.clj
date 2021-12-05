@@ -26,8 +26,9 @@
               :background (css-var :charcoal)}]
 
   [:.gallery-paintings {:background (css-var :pink)
-            :height :100%
-            :padding :30px}
+                        :height :100%
+                        :display :flex
+                        :padding :30px}
    [:h1 {:font-size :3em}]]
 
   [:.gallery-painting {:background (css-var :light-blue)
