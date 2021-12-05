@@ -2,6 +2,8 @@
   (:require [my-art-gallery.fb.core :as fb]
             [re-frame.core :as re-frame]
             [clojure.set :as st]
+            [camel-snake-kebab.core :as csk]
+            [camel-snake-kebab.extras :as cske]
             ["firebase/firestore/lite" :as fs]))
 
 (defn db []
@@ -11,7 +13,10 @@
   "Returns a pair [id document] from the Firestore document argument"
   [doc]
   [(aget doc "id")
-   (js->clj (js-invoke doc "data") :keywordize-keys true)])
+   (-> doc
+       (js-invoke "data")
+       (js->clj :keywordize-keys true)
+       (#(cske/transform-keys csk/->kebab-case %)))])
 
 (defn snapshot->clj [snapshot]
   (map (fn [doc] (document->clj doc))

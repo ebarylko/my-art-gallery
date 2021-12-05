@@ -44,17 +44,10 @@
                             :event-success ::fetch-recent-galleries-ok
                             :event-error ::fetch-recent-galleries-error}}))
 
-(defn ->gallery [[id glr]]
-  [id
-   (st/rename-keys glr {:paintingUrl :painting-url
-                        :createdOn :created-on
-                        :avatarUrl :avatar-url
-                        #_#_:artistRef :artist-ref})])
-
 (re-frame/reg-event-db
  ::fetch-recent-galleries-ok
  (fn [db [_ galleries]]
-   (assoc db :recent-galleries (map ->gallery galleries))))
+   (assoc db :recent-galleries galleries)))
 
 
 

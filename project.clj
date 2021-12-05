@@ -13,6 +13,7 @@
                  [garden-gnome "0.1.0"]
                  [net.dhleong/spade "1.1.0"]
                  [binaryage/devtools "1.0.3"]
+                 [camel-snake-kebab "0.4.2"]
                  [day8.re-frame/re-frame-10x "1.1.11"]]
 
   :min-lein-version "2.6.1"

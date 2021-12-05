@@ -74,7 +74,7 @@
        [:img
         {:alt "Avatar",:src avatar-url}]]]
      [:div.media-content
-      [:p.title.is-4 artist-ref]
+      [:p.title.is-4 (if artist-ref "artist ref" "no artist ref")]
       [:p.subtitle.is-6 instagram]]]
     [:div.content description]]])
 
