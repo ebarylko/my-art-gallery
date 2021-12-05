@@ -117,10 +117,14 @@
        [:a.button.is-light {:href (views/href :login)}
         "Log in"]]]]]])
 
+
+
+
 (defn router-component [{:keys [router]}]
   (let [current-route @(re-frame/subscribe [:current-route])]
     [:div.main-container
      [top-menu {:router router :current-route current-route}]
+     [views/display-error]
      (when current-route
        [(-> current-route :data :view)])]))
 

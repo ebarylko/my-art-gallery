@@ -8,6 +8,10 @@
    (:current-route db)))
 
 (re-frame/reg-sub
+ ::error
+ (fn [db] (:error db)))
+
+(re-frame/reg-sub
  ::name
  (fn [db]
    (:name db)))

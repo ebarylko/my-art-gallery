@@ -13,6 +13,17 @@
   ([k params query]
    (rfe/href k params query)))
 
+
+(defn display-error
+  []
+  (let [error @(re-frame/subscribe [::subs/error])]
+    (when error
+      [:div.container
+       [:div.notification
+        [:button.delete]
+        "There's an error"
+        [:p error]]])))
+
 (defn gallery-content []
   (let [pts (re-frame/subscribe [::subs/gallery-paintings])
         route (re-frame/subscribe [::subs/current-route])

@@ -20,11 +20,11 @@
 
 (re-frame/reg-fx
  ::fetch-collection
- (fn [{:keys [collection event-success event-error]}]
+ (fn [{:keys [collection success error]}]
    (fbf/fetch-collection
     collection
-    #(re-frame/dispatch-sync [event-success %])
-    #(re-frame/dispatch-sync [event-error]))))
+    #(re-frame/dispatch (conj success %))
+    #(re-frame/dispatch (conj error %)))))
 
 (re-frame/reg-fx
  ::fetch-doc

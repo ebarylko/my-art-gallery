@@ -41,20 +41,14 @@
  ::load-recent-galleries
  (fn []
    {::fbe/fetch-collection {:collection "galleries"
-                            :event-success ::fetch-recent-galleries-ok
-                            :event-error ::fetch-recent-galleries-error}}))
+                            :success [::fetch-done :recent-galleries ]
+                            :error [::fetch-done :error]}}))
 
 (re-frame/reg-event-db
- ::fetch-recent-galleries-ok
- (fn [db [_ galleries]]
-   (assoc db :recent-galleries galleries)))
+ ::fetch-done
+ (fn [db [_ key value]]
+   (assoc db key value)))
 
-
-
-(re-frame/reg-event-db
- ::fetch-recent-galleries-error
- (fn [db]
-   (assoc db :error "Can't fetch recent galleries :(")))
 
 (defn ->painting [[id pnt]]
   [id
