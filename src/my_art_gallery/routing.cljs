@@ -14,9 +14,9 @@
    ["" {:name      :home
         :view      views/home-page
         :link-text "Home"
-        :controllers
-        [{:start (fn [& params](js/console.log "Entering home page"))
-          :stop  (fn [& params] (js/console.log "Leaving home page"))}]}]
+        :controllers [{:start (fn [& params]
+                                (js/console.log "Entering home page")
+                                (re-frame/dispatch [::events/load-recent-galleries]))}]}]
    ["registration" {:name      :registration
                     :view      views/registration-page
                     :link-text "Sign up"

@@ -61,7 +61,7 @@
          [:a {:href (href :galleries {:id gid})} "Back to gallery"]]]]]]))
 
 (defn gallery-card
-  [id {:keys [artist painting-url instagram avatar-url description]}]
+  [id {:keys [artist painting-url instagram avatar-url description artist-ref] :as glr}]
   [:div.card
    [:div.card-image
     [:figure.image.is-4by3
@@ -74,8 +74,9 @@
        [:img
         {:alt "Avatar",:src avatar-url}]]]
      [:div.media-content
-      [:p.title.is-4 artist]
-      [:p.subtitle.is-6 instagram]]]
+      [:p.title.is-4 (clojure.string/join "-" (keys glr))]
+      [:p.subtitle.is-6 instagram]
+      [:p artist-ref]]]
     [:div.content description]]])
 
 

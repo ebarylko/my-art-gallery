@@ -8,7 +8,8 @@
 (defn init [config]
   (when-not @firebase-instance
     (reset! firebase-instance (-> Firebase (.initializeApp (clj->js config))))
-    (re-frame/dispatch [:my-art-gallery.events/fb-initialized])))
+    (println "Firebase initialized!")
+    ))
 
 (defn firebase-init!
   []
