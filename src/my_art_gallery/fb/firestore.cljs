@@ -22,6 +22,7 @@
   (map (fn [doc] (document->clj doc))
        (.-docs ^js snapshot)))
 
+
 (defn fetch-collection [path on-success on-error]
   (-> (db)
       (fs/collection path)
@@ -29,13 +30,16 @@
       (.then (comp on-success snapshot->clj))
       (.catch on-error)))
 
-(defn doc->clj [doc]
-  (.data doc))
+
+(defn fetch-doc-ref [ref on-success on-error]
+  (-> ref
+      fs/getDoc
+      (.then (comp on-success document->clj))
+      (.catch on-error)))
+
 
 (defn fetch-doc [path on-success on-error]
   (-> (db)
       (fs/doc path)
-      fs/getDoc
-      (.then (comp on-success document->clj))
-      (.catch on-error)))
+      (fetch-doc-ref on-success on-error)))
 

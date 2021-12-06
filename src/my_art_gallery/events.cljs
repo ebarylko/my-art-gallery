@@ -38,12 +38,27 @@
 (re-frame/reg-event-fx
  ::load-recent-galleries
  (fn []
-   {::fbe/fetch-collection (fetch-for ["galleries"] :recent-galleries)}))
+   {::fbe/fetch-collection {:path "galleries"
+                            :success [::load-artists]
+                            :error [::fetch-done :error]}}))
+
+
+(re-frame/reg-event-fx
+ ::load-artists
+ (fn [cofx [_ galleries]]
+   (doseq [[id glr] galleries :when (:artist-ref glr)]
+     (println "Loading artists for" id)
+     (fbe/fetch fbf/fetch-doc-ref
+                {:path (:artist-ref glr)
+                 :success [::fetch-done [:recent-galleries id :artist]]
+                 :error [::fetch-done :error]}))
+   {:db (assoc (:db cofx) :recent-galleries (into {} galleries))}))
 
 
 (re-frame/reg-event-db
  ::fetch-done
  (fn [db [_ key value]]
-   (assoc db key value)))
-
+   (if (coll? key)
+     (assoc-in db key value)
+     (assoc db key value))))
 
