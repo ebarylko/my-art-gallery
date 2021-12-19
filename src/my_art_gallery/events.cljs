@@ -47,7 +47,6 @@
  ::load-artists
  (fn [cofx [_ galleries]]
    (doseq [[id glr] galleries :when (:artist-ref glr)]
-     (println "Loading artists for" id)
      (fbe/fetch fbf/fetch-doc-ref
                 {:path (:artist-ref glr)
                  :success [::fetch-done [:recent-galleries id :artist]]

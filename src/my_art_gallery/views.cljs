@@ -44,7 +44,7 @@
 
 
 (defn gallery-painting
-  "this is for getting the specific painting"
+  "This is for getting the specific painting"
   []
   (let [[id pnt] @(re-frame/subscribe [::subs/painting])
         route (re-frame/subscribe [::subs/current-route])
@@ -74,7 +74,7 @@
          [:a {:href (href :galleries {:id gid})} "Back to gallery"]]]]]]))
 
 (defn gallery-card
-  [id {:keys [artist painting-url instagram avatar-url description artist-ref] :as glr}]
+  [id {:keys [painting-url description] [artist-id artist-info] :artist :as glr}]
   [:div.card
    [:div.card-image
     [:figure.image.is-4by3
@@ -84,11 +84,10 @@
     [:div.media
      [:div.media-left
       [:figure.image.is-48x48
-       [:img
-        {:alt "Avatar",:src avatar-url}]]]
+       [:img {:alt "Avatar",:src (:avatar-url artist-info)}]]]
      [:div.media-content
-      [:p.title.is-4 (if artist-ref "artist ref" "no artist ref")]
-      [:p.subtitle.is-6 instagram]]]
+      [:p.title.is-4 (:name artist-info)]
+      [:p.subtitle.is-6 (:instagram artist-info)]]]
     [:div.content description]]])
 
 
