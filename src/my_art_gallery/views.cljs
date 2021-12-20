@@ -58,11 +58,10 @@
         [:p.card-header-title (:name pnt)]
         [:div.materials 
          (for [m (get pnt :materials [])]
-           ^{:key m}[:p.tag m])] ]
+           ^{:key m} [:p.tag m])] ]
        [:div.card-image
         [:figure.image.painting
-         [:img {:src (:painting-url pnt) }]]
-        ]
+         [:img {:src (:painting-url pnt)}]]]
        [:div.card-content
         [:div.content (:description pnt)]
         (if artist
