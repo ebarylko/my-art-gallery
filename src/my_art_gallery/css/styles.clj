@@ -35,8 +35,14 @@
                        :padding :30px
                        :color :white}
    [:.painting
-    [:header {:box-shadow :none}]
-    [:.card-image {:padding "1.5rem"}]]]
+    [:header {:box-shadow :none
+              :justify-content :center
+              :align-items :center
+              :flex-direction :column}
+     [:.card-header-title {:font-size :3em}]]
+    [:.card-image {:padding "1.5rem"}]
+    [:.card-content {:padding-top :0px}
+     [:figure {:max-width :50px}]]]]
 
   [:.band-title
    [:h1 {:width :80%

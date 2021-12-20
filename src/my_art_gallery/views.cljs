@@ -55,18 +55,20 @@
      [:div.container.is-widescreen
       [:div.card.painting
        [:header.card-header
-        [:p.card-header-title (:name pnt)]]
+        [:p.card-header-title (:name pnt)]
+        [:div.materials 
+         (for [m (get pnt :materials [])]
+           ^{:key m}[:p.tag m])] ]
        [:div.card-image
         [:figure.image.painting
          [:img {:src (:painting-url pnt) }]]
-        [:div "Materials:"
-         (for [m (get pnt :materials [])]
-           ^{:key m}[:p m])]]
+        ]
        [:div.card-content
+        [:div.content (:description pnt)]
         (if artist
           [:div.media
            [:div.media-left
-            [:figure.image.is-48x48
+            [:figure.image
              [:img {:alt "Artist avatar"
                     :src (artist :avatar-url)}]]]
            [:div.media-content
@@ -76,7 +78,7 @@
               {:href (str "https://www.instagram.com/" (artist :instagram))}
               (artist :instagram)]]]]
           [:div "Artist info loading..."])
-        [:div.content (:description pnt)]]
+        ]
        [:footer.card-footer
         [:div.card-footer-item
          [:a {:href (href :galleries {:id gid})} "Back to gallery"]]]]]]))
