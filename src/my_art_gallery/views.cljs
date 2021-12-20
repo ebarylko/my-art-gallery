@@ -58,22 +58,25 @@
         [:p.card-header-title (:name pnt)]]
        [:div.card-image
         [:figure.image.painting
-         [:img {:src (:painting-url pnt) }]]]
-         [:div.card-content
-          (if artist
-            [:div.media
-             [:div.media-left
-              [:figure.image.is-48x48
-               [:img {:alt "Artist avatar"
-                      :src (artist :avatar-url)}]]]
-             [:div.media-content
-              [:p.title.is-5 (artist :name)]
-              [:p.subtitle.is-6
-               [:a
-                {:href (str "https://www.instagram.com/" (artist :instagram))}
-                (artist :instagram)]]]]
-            [:div "Artist infor loading..."])
-          [:div.content (:description pnt)]]
+         [:img {:src (:painting-url pnt) }]]
+        [:div "Materials:"
+         (for [m (get pnt :materials [])]
+           ^{:key m}[:p m])]]
+       [:div.card-content
+        (if artist
+          [:div.media
+           [:div.media-left
+            [:figure.image.is-48x48
+             [:img {:alt "Artist avatar"
+                    :src (artist :avatar-url)}]]]
+           [:div.media-content
+            [:p.title.is-5 (artist :name)]
+            [:p.subtitle.is-6
+             [:a
+              {:href (str "https://www.instagram.com/" (artist :instagram))}
+              (artist :instagram)]]]]
+          [:div "Artist info loading..."])
+        [:div.content (:description pnt)]]
        [:footer.card-footer
         [:div.card-footer-item
          [:a {:href (href :galleries {:id gid})} "Back to gallery"]]]]]]))
