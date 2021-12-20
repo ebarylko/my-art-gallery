@@ -76,7 +76,8 @@
             [:p.subtitle.is-6
              [:a
               {:href (str "https://www.instagram.com/" (artist :instagram))}
-              (artist :instagram)]]]]
+              (artist :instagram)]]]
+           [:div.media-right (artist :bio)]]
           [:div "Artist info loading..."])
         ]
        [:footer.card-footer
