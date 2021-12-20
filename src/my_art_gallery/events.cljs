@@ -52,9 +52,8 @@
 (re-frame/reg-event-fx
  ::load-recent-galleries
  (fn []
-   {::fbe/fetch-collection {:path "galleries"
-                            :success [::load-artists]
-                            :error [::fetch-done :error]}}))
+   {::fbe/fetch-collection (fetch-for "galleries"
+                                      [::load-artists])}))
 
 
 (re-frame/reg-event-fx
