@@ -21,6 +21,15 @@
  (fn [db]
    (:recent-galleries db)))
 
+(re-frame/reg-sub
+ ::artist
+ (fn [db]
+   (get db :artist)))
+
+(re-frame/reg-sub
+ ::gallery
+ (fn [db]
+   (get db :gallery)))
 
 (re-frame/reg-sub
  ::gallery-paintings

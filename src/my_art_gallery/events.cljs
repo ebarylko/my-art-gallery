@@ -14,17 +14,31 @@
 
 (defn fetch-for
   [path key]
-  {:path (clojure.string/join "/" path)
-   :success [::fetch-done key]
+  {:path (cond->> path
+           (vector? path) (clojure.string/join "/"))
+   :success (cond->> key
+              (keyword? key) (vector ::fetch-done))
    :error [::fetch-done :error]})
 
 
 (re-frame/reg-event-fx
  ::load-painting
  (fn [_ [_ id pid] ]
-   {::fbe/fetch-doc (fetch-for
-                     ["galleries" id "paintings" pid]
-                     :painting)}))
+   {:fx [[::fbe/fetch-doc (fetch-for
+                           ["galleries" id "paintings" pid]
+                           :painting)]
+
+         [::fbe/fetch-doc (fetch-for
+                           ["galleries" id]
+                           [::load-artist])]]}))
+
+
+(re-frame/reg-event-fx
+ ::load-artist
+ (fn [{:keys [db]} [_ [id {:keys [artist-ref] :as glr}]]]
+   (cond-> {:db (assoc db :gallery glr)}
+     artist-ref (assoc ::fbe/fetch-doc-ref
+                       (fetch-for artist-ref :artist)))))
 
 
 (re-frame/reg-event-fx

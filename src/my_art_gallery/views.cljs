@@ -43,13 +43,14 @@
             [:img {:src painting-url}]]]])]]]))
 
 
+
 (defn gallery-painting
   "This is for getting the specific painting"
   []
   (let [[id pnt] @(re-frame/subscribe [::subs/painting])
         route (re-frame/subscribe [::subs/current-route])
-        gid (-> @route :path-params :id)]
-    (js/console.log pnt)
+        gid (-> @route :path-params :id)
+        [id artist] @(re-frame/subscribe [::subs/artist])]
     [:section.gallery-painting
      [:div.container.is-widescreen
       [:div.card.painting
@@ -58,17 +59,21 @@
        [:div.card-image
         [:figure.image.painting
          [:img {:src (:painting-url pnt) }]]]
-       [:div.card-content
-        [:div.media
-         [:div.media-left
-          [:figure.image.is-48x48
-           [:img
-            {:alt "Avatar",:src "https://images.unsplash.com/photo-1631913290783-490324506193?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"}]]]
-         [:div.media-content
-          [:p.title.is-5 "Author name"]
-          [:p.subtitle.is-6
-           [:a {:href "https://www.instagram.com/georgiepuddingnpie"} "@fiery-heart"]]]]
-        [:div.content (:description pnt)]]
+         [:div.card-content
+          (if artist
+            [:div.media
+             [:div.media-left
+              [:figure.image.is-48x48
+               [:img {:alt "Artist avatar"
+                      :src (artist :avatar-url)}]]]
+             [:div.media-content
+              [:p.title.is-5 (artist :name)]
+              [:p.subtitle.is-6
+               [:a
+                {:href (str "https://www.instagram.com/" (artist :instagram))}
+                (artist :instagram)]]]]
+            [:div "Artist infor loading..."])
+          [:div.content (:description pnt)]]
        [:footer.card-footer
         [:div.card-footer-item
          [:a {:href (href :galleries {:id gid})} "Back to gallery"]]]]]]))

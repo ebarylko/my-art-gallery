@@ -19,8 +19,9 @@
        (#(cske/transform-keys csk/->kebab-case %)))])
 
 (defn snapshot->clj [snapshot]
-  (map (fn [doc] (document->clj doc))
-       (.-docs ^js snapshot)))
+  (into {}
+        (map (fn [doc] (document->clj doc))
+             (.-docs ^js snapshot))))
 
 
 (defn fetch-collection [path on-success on-error]
