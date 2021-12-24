@@ -1,14 +1,13 @@
 (ns my-art-gallery.fb.core
-  (:require ["firebase/app" :as Firebase]
-            [re-frame.core :as re-frame]
+  (:require ["firebase/app" :as fba]
             [my-art-gallery.fb.config :as cfg]))
 
 (defonce firebase-instance (atom nil))
 
 (defn init [config]
   (when-not @firebase-instance
-    (reset! firebase-instance (-> Firebase (.initializeApp (clj->js config))))
-    (re-frame/dispatch [:my-art-gallery.events/fb-initialized])))
+    (let [cfg (clj->js config)]
+      (reset! firebase-instance (fba/initializeApp cfg)))))
 
 (defn firebase-init!
   []

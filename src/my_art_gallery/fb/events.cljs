@@ -18,13 +18,25 @@
    {::email-login! args}))
 
 
+(defn fetch
+  [f {:keys [path success error]}]
+  (f path
+     #(re-frame/dispatch (conj success %))
+     #(re-frame/dispatch (conj error %))))
+
+
 (re-frame/reg-fx
  ::fetch-collection
- (fn [{:keys [collection event-success event-error]}]
-   (fbf/fetch-collection
-    collection
-    #(re-frame/dispatch-sync [event-success %])
-    #(re-frame/dispatch-sync [event-error]))))
+ (partial fetch fbf/fetch-collection))
 
+
+(re-frame/reg-fx
+ ::fetch-doc-ref
+ (partial fetch fbf/fetch-doc-ref))
+
+
+(re-frame/reg-fx
+ ::fetch-doc
+ (partial fetch fbf/fetch-doc))
 
 

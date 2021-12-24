@@ -23,13 +23,26 @@
 
   [:.welcome {:min-height :350px
               :padding :30px
-              :background (css-var :light-blue)}]
+              :background (css-var :charcoal)}]
 
   [:.gallery-paintings {:background (css-var :pink)
-            :height :100%
-            :padding :30px}
+                        :height :100%
+                        :display :flex
+                        :padding :30px}
    [:h1 {:font-size :3em}]]
-  
+
+  [:.gallery-painting {:background (css-var :light-blue)
+                       :padding :30px
+                       :color :white}
+   [:.painting
+    [:header {:box-shadow :none
+              :justify-content :center
+              :align-items :center
+              :flex-direction :column}
+     [:.card-header-title {:font-size :3em}]]
+    [:.card-image {:padding "1.5rem"}]
+    [:.card-content {:padding-top :0px}
+     [:figure {:max-width :50px}]]]]
 
   [:.band-title
    [:h1 {:width :80%
@@ -50,7 +63,8 @@
                :font-size :larger}]]]
 
   [:.recent-galleries {:height :auto
-                       :background :white}
-   [:.band-title {:color (css-var :orange)}]
+                       :background (css-var :light-blue)
+                       :padding :1.5rem}
+   [:.band-title {:color :white}]
    [:.cards {:flex-wrap :wrap}
     [:.card {:min-width :200px}]]])

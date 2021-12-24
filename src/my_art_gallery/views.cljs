@@ -13,21 +13,78 @@
   ([k params query]
    (rfe/href k params query)))
 
+
+(defn display-error
+  []
+  (let [error @(re-frame/subscribe [::subs/error])]
+    (when error
+      [:div.container
+       [:div.notification
+        [:button.delete]
+        "There's an error"
+        [:p error]]])))
+
 (defn gallery-content []
-  (let [pts (re-frame/subscribe [::subs/gallery-paintings])]
+  (let [pts (re-frame/subscribe [::subs/gallery-paintings])
+        route (re-frame/subscribe [::subs/current-route])
+        gid (-> @route :path-params :id)]
     [:section.gallery-paintings
-     "Content for gallery "
-     [:span (count @pts)]
-     [:div.paintings.columns.is-multiline
-      (for [[id {:keys [name paintingUrl]}] @pts]
-        ^{:key id}
-        [:div.painting.column.is-one-quarter
-         [:div.title name]
-         [:figure.image.is-square
-         [:img {:src paintingUrl}]]])]]))
+     [:div.container.box
+      [:h1 "Content for gallery ("
+       [:span (count @pts)]
+       "paintings)"]
+      [:div.paintings.columns.is-multiline
+       (for [[id {:keys [name painting-url]}] @pts]
+         ^{:key id}
+         [:div.painting.column.is-one-quarter
+          [:div.title name]
+          [:a {:href (href :gallery-painting {:pid id :id gid})}
+           [:figure.image.is-square
+            [:img {:src painting-url}]]]])]]]))
+
+
+
+(defn gallery-painting
+  "This is for getting the specific painting"
+  []
+  (let [[id pnt] @(re-frame/subscribe [::subs/painting])
+        route (re-frame/subscribe [::subs/current-route])
+        gid (-> @route :path-params :id)
+        [id artist] @(re-frame/subscribe [::subs/artist])]
+    [:section.gallery-painting
+     [:div.container.is-widescreen
+      [:div.card.painting
+       [:header.card-header
+        [:p.card-header-title (:name pnt)]
+        [:div.materials 
+         (for [m (get pnt :materials [])]
+           ^{:key m} [:p.tag m])] ]
+       [:div.card-image
+        [:figure.image.painting
+         [:img {:src (:painting-url pnt)}]]]
+       [:div.card-content
+        [:div.content (:description pnt)]
+        (if artist
+          [:div.media
+           [:div.media-left
+            [:figure.image
+             [:img {:alt "Artist avatar"
+                    :src (artist :avatar-url)}]]]
+           [:div.media-content
+            [:p.title.is-5 (artist :name)]
+            [:p.subtitle.is-6
+             [:a
+              {:href (str "https://www.instagram.com/" (artist :instagram))}
+              (artist :instagram)]]]
+           [:div.media-right (artist :bio)]]
+          [:div "Artist info loading..."])
+        ]
+       [:footer.card-footer
+        [:div.card-footer-item
+         [:a {:href (href :galleries {:id gid})} "Back to gallery"]]]]]]))
 
 (defn gallery-card
-  [id {:keys [artist painting-url instagram avatar-url description]}]
+  [id {:keys [painting-url description] [artist-id artist-info] :artist :as glr}]
   [:div.card
    [:div.card-image
     [:figure.image.is-4by3
@@ -37,11 +94,10 @@
     [:div.media
      [:div.media-left
       [:figure.image.is-48x48
-       [:img
-        {:alt "Avatar",:src avatar-url}]]]
+       [:img {:alt "Avatar",:src (:avatar-url artist-info)}]]]
      [:div.media-content
-      [:p.title.is-4 artist]
-      [:p.subtitle.is-6 instagram]]]
+      [:p.title.is-4 (:name artist-info)]
+      [:p.subtitle.is-6 (:instagram artist-info)]]]
     [:div.content description]]])
 
 
@@ -88,9 +144,10 @@
 (defn home-page []
   (let [name (re-frame/subscribe [::subs/name])]
     [:section.all-bands
-     [welcome-band @name]
+     [recent-galleries-band]
      [users-band]
-     [recent-galleries-band]]))
+     [welcome-band @name]
+     ]))
 
 (defn galleries-page []
   [:section.galleries

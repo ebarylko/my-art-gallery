@@ -11,49 +11,65 @@
  (fn [_ _]
    db/default-db))
 
+
+(defn fetch-for
+  [path key]
+  {:path (cond->> path
+           (vector? path) (clojure.string/join "/"))
+   :success (cond->> key
+              (keyword? key) (vector ::fetch-done))
+   :error [::fetch-done :error]})
+
+
+(re-frame/reg-event-fx
+ ::load-painting
+ (fn [_ [_ id pid] ]
+   {:fx [[::fbe/fetch-doc (fetch-for
+                           ["galleries" id "paintings" pid]
+                           :painting)]
+
+         [::fbe/fetch-doc (fetch-for
+                           ["galleries" id]
+                           [::load-artist])]]}))
+
+
+(re-frame/reg-event-fx
+ ::load-artist
+ (fn [{:keys [db]} [_ [id {:keys [artist-ref] :as glr}]]]
+   (cond-> {:db (assoc db :gallery glr)}
+     artist-ref (assoc ::fbe/fetch-doc-ref
+                       (fetch-for artist-ref :artist)))))
+
+
 (re-frame/reg-event-fx
  ::load-gallery
  (fn [_ [_ id]]
-   {::fbe/fetch-collection
-    {:collection (str "galleries/" id "/paintings")
-     :event-success ::load-gallery-ok
-     :event-error ::load-gallery-error}}))
+   {::fbe/fetch-collection (fetch-for ["galleries" id "paintings"]
+                                      :gallery-paintings)}))
 
-(re-frame/reg-event-db
- ::load-gallery-ok
- (fn [db [_ galleries]]
-   (assoc db :gallery-paintings galleries)))
-
-
-(re-frame/reg-event-db
- ::load-gallery-error
- (fn [db]
-   (assoc db :error "Can't load gallery :(")))
 
 (re-frame/reg-event-fx
- ::fb-initialized
+ ::load-recent-galleries
  (fn []
-   {::fbe/fetch-collection
-    {:collection "galleries"
-     :event-success ::fetch-recent-galleries-ok
-     :event-error ::fetch-recent-galleries-error}}))
+   {::fbe/fetch-collection (fetch-for "galleries"
+                                      [::load-artists])}))
 
-(defn ->gallery [[id glr]]
-  [id
-   (st/rename-keys glr {:paintingUrl :painting-url
-                        :createdOn :created-on
-                        :avatarUrl :avatar-url})])
 
-(re-frame/reg-event-db
- ::fetch-recent-galleries-ok
- (fn [db [_ galleries]]
-   (assoc db :recent-galleries (map ->gallery galleries))))
+(re-frame/reg-event-fx
+ ::load-artists
+ (fn [cofx [_ galleries]]
+   (let [fxs (for [[id glr] galleries :when (:artist-ref glr)]
+               [::fbe/fetch-doc-ref
+                (fetch-for (:artist-ref glr)
+                           [::fetch-done [:recent-galleries id :artist]])])]
+     {:db (assoc (:db cofx) :recent-galleries (into {} galleries))
+      :fx fxs})))
 
 
 (re-frame/reg-event-db
- ::fetch-recent-galleries-error
- (fn [db]
-   (assoc db :error "Can't fetch recent galleries :(")))
-
-
+ ::fetch-done
+ (fn [db [_ key value]]
+   (if (coll? key)
+     (assoc-in db key value)
+     (assoc db key value))))
 

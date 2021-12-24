@@ -11,37 +11,36 @@
 
 (def routes
   ["/"
-   [""
-    {:name      :home
-     :view      views/home-page
-     :link-text "Home"
-     :controllers
-     [{:start (fn [& params](js/console.log "Entering home page"))
-       :stop  (fn [& params] (js/console.log "Leaving home page"))}]}]
-   ["registration"
-    {:name      :registration
-     :view      views/registration-page
-     :link-text "Sign up"
-     :controllers
-     [{:start (fn [& params] (js/console.log "Entering regs"))
-       :stop  (fn [& params] (js/console.log "Leaving regs"))}]}]
-   ["login"
-    {:name      :login
-     :view      views/login-page
-     :link-text "Login"
-     :controllers
-     [{:start (fn [& params] (js/console.log "Entering Login"))
-       :stop  (fn [& params] (js/console.log "Leaving Login"))}]}]
+   ["" {:name      :home
+        :view      views/home-page
+        :link-text "Home"
+        :controllers [{:start (fn [& params]
+                                (re-frame/dispatch [::events/load-recent-galleries]))}]}]
+
+   ["registration" {:name      :registration
+                    :view      views/registration-page
+                    :link-text "Sign up"}]
+
+   ["login" {:name      :login
+             :view      views/login-page
+             :link-text "Login"}]
+
    ["galleries/:id"
-    {:name      :galleries
-     :view      views/gallery-content
-     :controllers
-     [{:parameters {:path [:id]}
-       :start (fn [params]
-                (let [gid (-> params :path :id)]
-                  (js/console.log "Loading gallery " gid)
-                  (re-frame/dispatch [::events/load-gallery gid])))
-       :stop  (fn [params] (js/console.log "Leaving gallery"))}]}] ])
+    ["" {:name      :galleries
+         :view      views/gallery-content
+         :controllers [{:parameters {:path [:id]}
+                        :start (fn [params]
+                                 (let [gid (-> params :path :id)]
+                                   (re-frame/dispatch [::events/load-gallery gid])))}]}]
+
+    ["/paintings/:pid" {:name :gallery-painting
+                        :view views/gallery-painting
+                        :controllers [{:parameters {:path [:id :pid]}
+                                       :start (fn [params]
+                                                (let [gid (-> params :path :id)
+                                                      pid (-> params :path :pid)]
+                                                  (re-frame/dispatch [::events/load-painting gid pid])))}]}]]])
+
 
 (defn on-navigate [new-match]
   (when new-match
@@ -112,10 +111,14 @@
        [:a.button.is-light {:href (views/href :login)}
         "Log in"]]]]]])
 
+
+
+
 (defn router-component [{:keys [router]}]
   (let [current-route @(re-frame/subscribe [:current-route])]
     [:div.main-container
      [top-menu {:router router :current-route current-route}]
+     [views/display-error]
      (when current-route
        [(-> current-route :data :view)])]))
 
