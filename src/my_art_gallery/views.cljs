@@ -14,6 +14,12 @@
    (rfe/href k params query)))
 
 
+(defn social-media-icon
+  [link fa-icon]
+  {:key fa-icon}
+  [:a {:href link}
+   [:i {:class (str "fab fa-3x " fa-icon)}]])
+
 (defn display-error
   []
   (let [error @(re-frame/subscribe [::subs/error])]
@@ -93,12 +99,14 @@
              [:div.title.is-5 "About"]]
             [:div.bio (bio-text (artist :bio) )]]
            [:div.media-right
-            [:a
-             {:href (str "https://www.instagram.com/" (artist :instagram))}
-             [:i {:class "fab fa-instagram fa-3x"}]]
-            [:a
-             {:href (str "https://www.snapchat.com/" (artist :instagram))}
-             [:i {:class "fab fa-snapchat fa-3x"}]]]]
+            [:div.social-media
+             (social-media-icon (str "https://www.instagram.com/" (artist :instagram)) "fa-instagram" )
+             (social-media-icon (str "https://www.snapchat.com/" (artist :instagram)) "fa-snapchat" )
+             (social-media-icon (str "https://www.facebook.com/" (artist :instagram)) "fa-facebook" )
+             (social-media-icon (str "https://www.twitter.com/" (artist :instagram)) "fa-twitter" )
+
+
+             ]]]
           [:div "Artist info loading..."])
         ]
        [:footer.card-footer

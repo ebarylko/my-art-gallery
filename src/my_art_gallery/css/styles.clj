@@ -44,7 +44,9 @@
     [:.card-content {:padding-top :0px}
      [:.media {:margin-top :3em}
       [:.bio {:text-overflow :ellipsis}]
-      [:figure {:max-width :200px}]]]]]
+      [:figure {:max-width :200px}]
+      [:.social-media {:flex-direction :column
+                       :display :flex}]]]]]
 
 
   [:.band-title
