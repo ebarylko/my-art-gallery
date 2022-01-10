@@ -25,6 +25,10 @@
              :view      views/login-page
              :link-text "Login"}]
 
+   ["artists"
+    ["/:id" {:name :artist
+             :view views/artist-profile}]]
+
    ["galleries/:id"
     ["" {:name      :galleries
          :view      views/gallery-content
