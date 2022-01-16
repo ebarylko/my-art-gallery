@@ -42,7 +42,12 @@
      [:.card-header-title {:font-size :3em}]]
     [:.card-image {:padding "1.5rem"}]
     [:.card-content {:padding-top :0px}
-     [:figure {:max-width :50px}]]]]
+     [:.media {:margin-top :3em}
+      [:.bio {:text-overflow :ellipsis}]
+      [:figure {:max-width :200px}]
+      [:.social-media {:flex-direction :column
+                       :display :flex}]]]]]
+
 
   [:.band-title
    [:h1 {:width :80%

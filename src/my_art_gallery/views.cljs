@@ -14,6 +14,12 @@
    (rfe/href k params query)))
 
 
+(defn social-media-icon
+  [link fa-icon]
+  {:key fa-icon}
+  [:a {:href link}
+   [:i {:class (str "fab fa-3x " fa-icon)}]])
+
 (defn display-error
   []
   (let [error @(re-frame/subscribe [::subs/error])]
@@ -43,6 +49,22 @@
             [:img {:src painting-url}]]]])]]]))
 
 
+(defn bio-text
+  "displays the bio a certain way depending on the amount of characters"
+  [text]
+  (if (> (count text) 600)
+    (str (subs text 0 600) "...")
+    text))
+
+
+(defn artist-profile
+  "displays the profile for the artist"
+  []
+  [:section.artist-profile
+   [:div.container.is-widescreen
+    [:div.title.is-1
+     [:p "Artist profile"]]]])
+
 
 (defn gallery-painting
   "This is for getting the specific painting"
@@ -50,15 +72,17 @@
   (let [[id pnt] @(re-frame/subscribe [::subs/painting])
         route (re-frame/subscribe [::subs/current-route])
         gid (-> @route :path-params :id)
-        [id artist] @(re-frame/subscribe [::subs/artist])]
+        [artist-id artist] @(re-frame/subscribe [::subs/artist])]
     [:section.gallery-painting
      [:div.container.is-widescreen
       [:div.card.painting
        [:header.card-header
         [:p.card-header-title (:name pnt)]
-        [:div.materials 
+        (if artist
+        [:div.title.is-5 (artist :name)])
+        [:div.materials.tags 
          (for [m (get pnt :materials [])]
-           ^{:key m} [:p.tag m])] ]
+           ^{:key m} [:p.tag.is-info m])] ]
        [:div.card-image
         [:figure.image.painting
          [:img {:src (:painting-url pnt)}]]]
@@ -71,12 +95,18 @@
              [:img {:alt "Artist avatar"
                     :src (artist :avatar-url)}]]]
            [:div.media-content
-            [:p.title.is-5 (artist :name)]
-            [:p.subtitle.is-6
-             [:a
-              {:href (str "https://www.instagram.com/" (artist :instagram))}
-              (artist :instagram)]]]
-           [:div.media-right (artist :bio)]]
+            [:a {:href (href :artist {:id artist-id})}
+             [:div.title.is-5 "About"]]
+            [:div.bio (bio-text (artist :bio) )]]
+           [:div.media-right
+            [:div.social-media
+             (social-media-icon (str "https://www.instagram.com/" (artist :instagram)) "fa-instagram" )
+             (social-media-icon (str "https://www.snapchat.com/" (artist :instagram)) "fa-snapchat" )
+             (social-media-icon (str "https://www.facebook.com/" (artist :instagram)) "fa-facebook" )
+             (social-media-icon (str "https://www.twitter.com/" (artist :instagram)) "fa-twitter" )
+
+
+             ]]]
           [:div "Artist info loading..."])
         ]
        [:footer.card-footer
