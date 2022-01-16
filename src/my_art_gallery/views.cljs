@@ -20,6 +20,21 @@
   [:a {:href link}
    [:i {:class (str "fab fa-3x " fa-icon)}]])
 
+(def media-handles
+  [{:url "https://www.instagram.com/" :field :instagram}
+   {:url "https://www.snapchat.com/add/" :field :snapchat}
+   {:url "https://www.twitter.com/" :field :twitter}
+   {:url "https://www.facebook.com/" :field :facebook} ])
+
+
+(defn display-handles
+  [artist]
+  [:div.social-media
+   (for [{:keys [url field]} media-handles
+         :when (artist field)]
+     (social-media-icon (str url (artist field)) (str "fa-" (name field))))])
+
+
 (defn display-error
   []
   (let [error @(re-frame/subscribe [::subs/error])]
@@ -99,14 +114,7 @@
              [:div.title.is-5 "About"]]
             [:div.bio (bio-text (artist :bio) )]]
            [:div.media-right
-            [:div.social-media
-             (social-media-icon (str "https://www.instagram.com/" (artist :instagram)) "fa-instagram" )
-             (social-media-icon (str "https://www.snapchat.com/" (artist :instagram)) "fa-snapchat" )
-             (social-media-icon (str "https://www.facebook.com/" (artist :instagram)) "fa-facebook" )
-             (social-media-icon (str "https://www.twitter.com/" (artist :instagram)) "fa-twitter" )
-
-
-             ]]]
+            [display-handles artist] ]]
           [:div "Artist info loading..."])
         ]
        [:footer.card-footer
