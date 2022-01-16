@@ -15,6 +15,7 @@
 
 (defn ^:dev/after-load mount-root []
   (re-frame/clear-subscription-cache!)
+  (routing/init-routes!)
   (let [root-el (.getElementById js/document "app")]
     (rdom/unmount-component-at-node root-el)
     (rdom/render [routing/router-component {:router routing/router}] root-el)))
@@ -22,7 +23,6 @@
 
 (defn init []
   (re-frame/dispatch-sync [::events/initialize-db])
-  (routing/init-routes!)
   (dev-setup)
   (mount-root)
   (fb/firebase-init!))
