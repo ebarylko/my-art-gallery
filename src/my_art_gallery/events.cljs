@@ -42,6 +42,16 @@
 
 
 (re-frame/reg-event-fx
+ ::load-artist-bio
+ (fn [_ [_ id] ]
+   {:fx  [::fbe/fetch-doc (fetch-for
+                           [:artists id]
+                           :artist)]}
+   ))
+
+
+
+(re-frame/reg-event-fx
  ::load-gallery
  (fn [_ [_ id]]
    {::fbe/fetch-collection (fetch-for ["galleries" id "paintings"]

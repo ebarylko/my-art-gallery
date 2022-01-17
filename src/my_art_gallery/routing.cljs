@@ -27,7 +27,11 @@
 
    ["artists"
     ["/:id" {:name :artist
-             :view views/artist-profile}]]
+             :view views/artist-profile
+             :controllers [{:parameters {:path [:id]}
+                            :start (fn [params]
+                                     (let [gid (-> params :path :id)]
+                                       (re-frame/dispatch [::events/load-gallery gid])))}]}]]
 
    ["galleries/:id"
     ["" {:name      :galleries

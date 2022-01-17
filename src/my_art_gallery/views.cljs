@@ -75,10 +75,14 @@
 (defn artist-profile
   "displays the profile for the artist"
   []
-  [:section.artist-profile
-   [:div.container.is-widescreen
-    [:div.title.is-1
-     [:p "Artist profile"]]]])
+  (let [[artist-id artist] @(re-frame/subscribe [::subs/artist])]
+        
+
+    [:section.artist-profile
+     [:div.container.is-widescreen
+      [:div.title.is-1
+       [:p (artist :name)]]]]))
+  
 
 
 (defn gallery-painting
